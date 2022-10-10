@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">IRLBR</string>
+  <string name="app_name">IRLBR</string>
+  <string name="mapbox_access_token">pk.eyJ1IjoiYWJzdHJhY2F0OTIiLCJhIjoiY2w5MnR5Zm1oMDZpYzQxbzdkczZ4bnA0aCJ9.isqiF7V8O4ThePVchqsMfw</string>
 </resources>
