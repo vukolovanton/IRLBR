@@ -13,7 +13,7 @@ function GameReady() {
     <View style={styles.container}>
       <View style={styles.inner}>
         <Text style={getStyle(context.coordinates)}>Location</Text>
-        {/* <Text>{context.coordinates ? context.coordinates.join(', ') : ''}</Text> */}
+        <Text style={getStyle(context.coordinates)}>{context.coordinates && context.coordinates.length > 0 ? context.coordinates.join(', ') : 'unset'}</Text>
       </View>
     </View>
   )
@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
   },
   inner: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   ready: {

@@ -17,8 +17,6 @@ export default react.memo(Card);
 
 const styles = StyleSheet.create({
   container: {
-    borderWidth: 1,
-    borderRadius: 10,
     marginTop: 6,
     marginBottom: 6,
     padding: 12,

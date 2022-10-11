@@ -6,6 +6,7 @@ import { SettingsContext } from "../context/settingsContext";
 MapboxGL.setAccessToken('pk.eyJ1IjoiYWJzdHJhY2F0OTIiLCJhIjoiY2w5MnR5Zm1oMDZpYzQxbzdkczZ4bnA0aCJ9.isqiF7V8O4ThePVchqsMfw');
 
 const renderAnnotations = (annotationCoordinate) => {
+  if (!annotationCoordinate) return null;
   return (
     <MapboxGL.PointAnnotation
       key="pointAnnotation"
@@ -14,8 +15,8 @@ const renderAnnotations = (annotationCoordinate) => {
     >
       <View
         style={{
-          height: 30,
-          width: 30,
+          height: 15,
+          width: 15,
           backgroundColor: "red",
           borderRadius: 50,
           borderColor: "#fff",
@@ -33,13 +34,14 @@ function MapPreview() {
     <View style={styles.container}>
       <MapboxGL.MapView
         style={styles.map}
+        centerCoordinate={context.coordinates}
       // onPress={event => setCoordinates(event.geometry.coordinates)}
       >
         <MapboxGL.Camera
           zoomLevel={12}
           centerCoordinate={context.coordinates}
         />
-        <MapboxGL.PointAnnotation coordinate={context.coordinates} />
+        {/* <MapboxGL.PointAnnotation coordinate={context.coordinates} /> */}
         <View>{renderAnnotations(context.coordinates)}</View>
       </MapboxGL.MapView>
     </View>

@@ -1,14 +1,10 @@
-import { useContext, useState, useEffect } from "react";
-import { StyleSheet, View, Text, PermissionsAndroid, Alert, Button, TextInput } from "react-native";
-import Card from "../components/Card";
+import { useContext, useEffect } from "react";
+import { StyleSheet, View, Text, PermissionsAndroid, Alert, Button } from "react-native";
 import GameReady from "../components/GameReady";
+import LocationInput from "../components/LocationInput";
 import { SettingsContext } from '../context/settingsContext';
 
-const coordinatesRegExp = /^-?[0-9]{1,3}(?:\.[0-9]{1,10})?$/;
-
 function Settings({ navigation }) {
-  const [longitude, setLongtitude] = useState(null);
-  const [latitude, setLatitude] = useState(null);
 
   const context = useContext(SettingsContext);
 
@@ -35,21 +31,6 @@ function Settings({ navigation }) {
     }
   };
 
-  function handleSetEnteredLocation() {
-    if (!coordinatesRegExp.test(longitude) || !coordinatesRegExp.test(latitude)) {
-      Alert.alert("Entered wrong coordinates");
-      return;
-    }
-
-    context.handleChangeCoordinates([longitude, latitude]);
-    setLatitude('');
-    setLongtitude('');
-  }
-
-  function handleClearLocation() {
-    context.handleChangeCoordinates(null);
-  }
-
   useEffect(() => {
     const granted = PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION;
     if (!granted) {
@@ -60,31 +41,7 @@ function Settings({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Game Settings</Text>
-      <Card
-        label="Location"
-        onPress={handleSetEnteredLocation}
-        title="Set Location"
-      >
-        <TextInput
-          style={styles.input}
-          placeholder="Longitude"
-          onChangeText={setLongtitude}
-          value={longitude}
-          keyboardType='numeric'
-        />
-        <TextInput
-          style={styles.input}
-          keyboardType="numeric"
-          value={latitude}
-          onChangeText={setLatitude}
-          placeholder="Latitude"
-        />
-        <Button
-          title="Clear"
-          onPress={handleClearLocation}
-        />
-      </Card>
-
+      <LocationInput />
       <GameReady />
 
       <View style={styles.additional}>
@@ -108,11 +65,5 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: 'black',
-  },
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
   },
 });

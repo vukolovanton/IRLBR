@@ -27,13 +27,15 @@ function Map({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.mapContainer}>
-        <Text>Map View</Text>
         <MapPreview />
       </View>
 
       <View style={styles.buttonsContainer}>
         <Button title="Settings" onPress={() => navigation.navigate("Settings")} />
         <Button title="Use my location" onPress={getCurrentCoordinates} />
+        <Text>
+          {context.coordinates && context.coordinates.length > 0 ? context.coordinates.join(', ') : 'NO'}
+        </Text>
       </View>
     </View>
   )

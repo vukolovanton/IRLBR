@@ -12,7 +12,7 @@ const App = () => {
   return (
     <SettingsContextProvider>
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Navigator screenOptions={{ headerShown: true }}>
           <Stack.Screen name="Map" component={Map} />
           <Stack.Screen name="Settings" component={Settings} />
         </Stack.Navigator>
