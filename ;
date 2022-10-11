@@ -63,24 +63,21 @@ function Map({ navigation }) {
       </View>
 
       <View style={styles.buttonsContainer}>
-        {/* <Button title="Settings" onPress={() => navigation.navigate("Settings")} /> */}
+        <Button title="Settings" onPress={() => navigation.navigate("Settings")} />
         <Button title="Permission" onPress={requestFineLocationPermission} />
         <Button title="Use my location" onPress={getCurrentCoordinates} />
         <TextInput
-          style={styles.input}
           placeholder="longitude"
           onChangeText={setLongtitude}
           value={longitude}
-          keyboardType='numeric'
+          keyboardType='number'
         />
         <TextInput
-          style={styles.input}
           keyboardType="numeric"
           value={latitude}
           onChangeText={setLatitude}
           placeholder="latitude"
         />
-        <Button title="Set location" onPress={() => setCoordinates([longitude, latitude])} />
       </View>
     </View>
   )
