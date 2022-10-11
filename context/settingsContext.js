@@ -1,19 +1,20 @@
 import { createContext, useState } from 'react';
 
 export const SettingsContext = createContext({
-  myLocation: [],
-  enteredLocation: [],
+  coordinates: [],
+  handleChangeCoordinates: () => { },
 });
 
 function SettingsContextProvider({ children }) {
-  const [myLocation, setMyLocation] = useState([]);
-  const [enteredLocation, setEnteredLocation] = useState([]);
+  const [coordinates, setCoordinates] = useState(null);
+
+  function handleChangeCoordinates(newCoordinates) {
+    setCoordinates(newCoordinates);
+  }
 
   const value = {
-    myLocation,
-    setMyLocation,
-    enteredLocation,
-    setEnteredLocation,
+    coordinates,
+    handleChangeCoordinates
   }
 
   return (

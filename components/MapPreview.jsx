@@ -1,9 +1,34 @@
 import { View, StyleSheet } from "react-native";
 import MapboxGL from '@rnmapbox/maps';
+import { useContext } from "react";
+import { SettingsContext } from "../context/settingsContext";
 
 MapboxGL.setAccessToken('pk.eyJ1IjoiYWJzdHJhY2F0OTIiLCJhIjoiY2w5MnR5Zm1oMDZpYzQxbzdkczZ4bnA0aCJ9.isqiF7V8O4ThePVchqsMfw');
 
-function MapPreview({ centerCoordinate }) {
+const renderAnnotations = (annotationCoordinate) => {
+  return (
+    <MapboxGL.PointAnnotation
+      key="pointAnnotation"
+      id="pointAnnotation"
+      coordinate={annotationCoordinate}
+    >
+      <View
+        style={{
+          height: 30,
+          width: 30,
+          backgroundColor: "red",
+          borderRadius: 50,
+          borderColor: "#fff",
+          borderWidth: 3,
+        }}
+      />
+    </MapboxGL.PointAnnotation>
+  );
+};
+
+function MapPreview() {
+  const context = useContext(SettingsContext);
+
   return (
     <View style={styles.container}>
       <MapboxGL.MapView
@@ -12,9 +37,10 @@ function MapPreview({ centerCoordinate }) {
       >
         <MapboxGL.Camera
           zoomLevel={12}
-          centerCoordinate={centerCoordinate}
+          centerCoordinate={context.coordinates}
         />
-        <MapboxGL.PointAnnotation coordinate={centerCoordinate} />
+        <MapboxGL.PointAnnotation coordinate={context.coordinates} />
+        <View>{renderAnnotations(context.coordinates)}</View>
       </MapboxGL.MapView>
     </View>
   )
