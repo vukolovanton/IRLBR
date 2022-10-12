@@ -3,7 +3,11 @@
     "browser": true,
     "es2021": true
   },
-  "extends": ["plugin:react/recommended", "eslint:recommended", "prettier"],
+  "extends": [
+    "plugin:react/recommended",
+    "eslint:recommended",
+    "prettier"
+  ],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -11,11 +15,15 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react", "react-native"],
+  "plugins": [
+    "react",
+    "react-native"
+  ],
   "rules": {
     "react/react-in-jsx-scope": "off",
     "react/jsx-uses-react": "off",
     "no-use-before-define": "off",
-    "sort-imports": "off"
+    "sort-imports": "off",
+    "react/prop-types": "off"
   }
 }

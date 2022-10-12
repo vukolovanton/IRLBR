@@ -1,6 +1,6 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import MapboxGL from '@rnmapbox/maps';
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import { SettingsContext } from "../context/settingsContext";
 
 MapboxGL.setAccessToken('pk.eyJ1IjoiYWJzdHJhY2F0OTIiLCJhIjoiY2w5MnR5Zm1oMDZpYzQxbzdkczZ4bnA0aCJ9.isqiF7V8O4ThePVchqsMfw');
@@ -30,12 +30,27 @@ const renderAnnotations = (annotationCoordinate) => {
 function MapPreview() {
   const context = useContext(SettingsContext);
 
+  const [polygon, setPolygon] = useState({
+    type: "Feature",
+    geometry: {
+      type: "Polygon",
+      coordinates: [
+        [
+          [-122.085053, 37.421532],
+          [-122.082907, 37.421528],
+          [-122.085257, 37.420463],
+          [-122.083122, 37.420395]
+        ],
+      ],
+    },
+  });
+
   return (
     <View style={styles.container}>
       <MapboxGL.MapView
         style={styles.map}
         centerCoordinate={context.coordinates}
-      // onPress={event => setCoordinates(event.geometry.coordinates)}
+        onPress={event => Alert.alert(event.geometry.coordinates.toString())}
       >
         <MapboxGL.Camera
           zoomLevel={12}
@@ -43,6 +58,13 @@ function MapPreview() {
         />
         {/* <MapboxGL.PointAnnotation coordinate={context.coordinates} /> */}
         <View>{renderAnnotations(context.coordinates)}</View>
+        <MapboxGL.ShapeSource id="source" shape={polygon}>
+          <MapboxGL.FillLayer id="fill" style={{ fillColor: "grey" }} />
+          <MapboxGL.LineLayer
+            id="line"
+            style={{ lineColor: "black", lineWidth: 2 }}
+          />
+        </MapboxGL.ShapeSource>
       </MapboxGL.MapView>
     </View>
   )

@@ -1,4 +1,4 @@
-import {useContext, useEffect} from 'react';
+import { useContext, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -8,7 +8,7 @@ import {
   Button,
 } from 'react-native';
 import GameReady from '../components/GameReady';
-import {SettingsContext} from '../context/settingsContext';
+import { SettingsContext } from '../context/settingsContext';
 import LocationInput from '../components/LocationInput';
 
 function Settings() {
