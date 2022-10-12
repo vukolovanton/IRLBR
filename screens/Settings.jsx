@@ -1,11 +1,17 @@
-import { useContext, useEffect } from "react";
-import { StyleSheet, View, Text, PermissionsAndroid, Alert, Button } from "react-native";
-import GameReady from "../components/GameReady";
-import LocationInput from "../components/LocationInput";
-import { SettingsContext } from '../context/settingsContext';
+import {useContext, useEffect} from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  PermissionsAndroid,
+  Alert,
+  Button,
+} from 'react-native';
+import GameReady from '../components/GameReady';
+import {SettingsContext} from '../context/settingsContext';
+import LocationInput from '../components/LocationInput';
 
-function Settings({ navigation }) {
-
+function Settings() {
   const context = useContext(SettingsContext);
 
   const requestFineLocationPermission = async () => {
@@ -13,13 +19,12 @@ function Settings({ navigation }) {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         {
-          title: "Location Permission",
-          message:
-            "This app needs access to your location",
-          buttonNeutral: "Ask Me Later",
-          buttonNegative: "Cancel",
-          buttonPositive: "OK"
-        }
+          title: 'Location Permission',
+          message: 'This app needs access to your location',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         Alert.alert('You can use fine location');
@@ -36,7 +41,7 @@ function Settings({ navigation }) {
     if (!granted) {
       requestFineLocationPermission();
     }
-  }, [])
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -46,10 +51,13 @@ function Settings({ navigation }) {
 
       <View style={styles.additional}>
         <Text style={styles.header}>Additional settings</Text>
-        <Button title="Check permission" onPress={requestFineLocationPermission} />
+        <Button
+          title="Check permission"
+          onPress={requestFineLocationPermission}
+        />
       </View>
     </View>
-  )
+  );
 }
 
 export default Settings;
