@@ -33,6 +33,7 @@ function Map({ navigation }) {
       <View style={styles.buttonsContainer}>
         <Button title="Settings" onPress={() => navigation.navigate("Settings")} />
         <Button title="Use my location" onPress={getCurrentCoordinates} />
+        <Button title="Create game area" onPress={context.createGameArea} />
         <Text>
           {context.coordinates && context.coordinates.length > 0 ? context.coordinates.join(', ') : 'NO'}
         </Text>
@@ -49,6 +50,8 @@ const styles = StyleSheet.create({
   },
   mapContainer: {},
   buttonsContainer: {
+    flex: 1,
+    justifyContent: 'space-between'
   },
   input: {
     height: 40,

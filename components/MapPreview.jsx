@@ -2,6 +2,7 @@ import { View, StyleSheet, Alert } from "react-native";
 import MapboxGL from '@rnmapbox/maps';
 import { useState, useContext } from "react";
 import { SettingsContext } from "../context/settingsContext";
+import { getCoordinatesForPointFromGivenDistance } from "../utils";
 
 MapboxGL.setAccessToken('pk.eyJ1IjoiYWJzdHJhY2F0OTIiLCJhIjoiY2w5MnR5Zm1oMDZpYzQxbzdkczZ4bnA0aCJ9.isqiF7V8O4ThePVchqsMfw');
 
@@ -30,20 +31,10 @@ const renderAnnotations = (annotationCoordinate) => {
 function MapPreview() {
   const context = useContext(SettingsContext);
 
-  const [polygon, setPolygon] = useState({
-    type: "Feature",
-    geometry: {
-      type: "Polygon",
-      coordinates: [
-        [
-          [-122.085053, 37.421532],
-          [-122.082907, 37.421528],
-          [-122.085257, 37.420463],
-          [-122.083122, 37.420395]
-        ],
-      ],
-    },
-  });
+  // const coords1 = getCoordinatesForPointFromGivenDistance([37.421493, -122.083922], 500, 180);
+  // const coords2 = getCoordinatesForPointFromGivenDistance([37.421493, -122.083922], 500, -180);
+  // const coords3 = getCoordinatesForPointFromGivenDistance([37.421493, -122.083922], 500, 90);
+  // const coords4 = getCoordinatesForPointFromGivenDistance([37.421493, -122.083922], 500, -90);
 
   return (
     <View style={styles.container}>
@@ -56,15 +47,22 @@ function MapPreview() {
           zoomLevel={12}
           centerCoordinate={context.coordinates}
         />
-        {/* <MapboxGL.PointAnnotation coordinate={context.coordinates} /> */}
+        {/* <MapboxGL.PointAnnotation coordinate={temp1} /> */}
+        {/* <MapboxGL.PointAnnotation coordinate={initialCoordinate} /> */}
+        {/* <MapboxGL.PointAnnotation coordinate={toTheRight} /> */}
+        {/* <MapboxGL.PointAnnotation coordinate={toTheBottom} /> */}
+        {/* <MapboxGL.PointAnnotation coordinate={toTheLeft} /> */}
+
         <View>{renderAnnotations(context.coordinates)}</View>
-        <MapboxGL.ShapeSource id="source" shape={polygon}>
-          <MapboxGL.FillLayer id="fill" style={{ fillColor: "grey" }} />
-          <MapboxGL.LineLayer
-            id="line"
-            style={{ lineColor: "black", lineWidth: 2 }}
-          />
-        </MapboxGL.ShapeSource>
+        {context.gameArea &&
+          <MapboxGL.ShapeSource id="source" shape={context.gameArea}>
+            <MapboxGL.FillLayer id="fill" style={{ fillColor: "lightblue", fillOpacity: 0.5 }} />
+            <MapboxGL.LineLayer
+              id="line"
+              style={{ lineColor: "black", lineWidth: 2 }}
+            />
+          </MapboxGL.ShapeSource>
+        }
       </MapboxGL.MapView>
     </View>
   )

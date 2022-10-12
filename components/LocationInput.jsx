@@ -33,17 +33,17 @@ function LocationInput() {
     >
       <TextInput
         style={styles.input}
-        placeholder="Longitude"
-        onChangeText={setLongtitude}
-        value={longitude}
-        keyboardType='numeric'
-      />
-      <TextInput
-        style={styles.input}
         keyboardType="numeric"
         value={latitude}
         onChangeText={setLatitude}
         placeholder="Latitude"
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Longitude"
+        onChangeText={setLongtitude}
+        value={longitude}
+        keyboardType='numeric'
       />
       <Button
         title="Clear"

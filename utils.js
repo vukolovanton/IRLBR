@@ -1,3 +1,5 @@
+import { LatLon } from "./utils/latlon";
+
 export function haversineFormula(coordinates1, coordinates2) {
   if (coordinates1.length === 0 || coordinates2.length === 0) return;
 
@@ -22,4 +24,8 @@ export function haversineFormula(coordinates1, coordinates2) {
   return d; // meters
 }
 
-
+export function getCoordinatesForPointFromGivenDistance(coordinates, distance, bearing) {
+  const latlon = new LatLon(coordinates[1], coordinates[0]);
+  const { lat, lon } = latlon.destinationPoint(distance, bearing);
+  return [lon, lat];
+}
