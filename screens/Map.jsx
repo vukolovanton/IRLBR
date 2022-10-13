@@ -24,6 +24,12 @@ function Map({ navigation }) {
       { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 })
   }
 
+  function checkIfIsInArea() {
+    console.log(context.gameArea.geometry.coordinates)
+    console.log(context.coordinates)
+    console.log('is in area?')
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.mapContainer}>
@@ -34,6 +40,7 @@ function Map({ navigation }) {
         <Button title="Settings" onPress={() => navigation.navigate("Settings")} />
         <Button title="Use my location" onPress={getCurrentCoordinates} />
         <Button title="Create game area" onPress={context.createGameArea} />
+        <Button title="Check" onPress={checkIfIsInArea} />
         <Text>
           {context.coordinates && context.coordinates.length > 0 ? context.coordinates.join(', ') : 'NO'}
         </Text>
