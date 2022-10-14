@@ -1,6 +1,7 @@
 import MapboxGL from '@rnmapbox/maps';
 
 function GameAreaShape({coordinates}) {
+    if (!coordinates) return null;
     return (
         <MapboxGL.ShapeSource id="source" shape={coordinates}>
             <MapboxGL.FillLayer id="fill" style={styles.fillLayer}/>

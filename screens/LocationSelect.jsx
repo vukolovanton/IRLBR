@@ -46,9 +46,10 @@ function LocationSelect() {
     }
 
     function handleLongPress(event) {
-        const { coordinates } = event.geometry;
-        if (coordinates.length  === 2) {
+        const {coordinates} = event.geometry;
+        if (coordinates.length === 2) {
             context.handleChangeCoordinates(coordinates);
+            context.createGameArea({clear: true});
         }
     }
 
@@ -70,7 +71,10 @@ function LocationSelect() {
                 </View>
                 <View>
                     <CustomButton title="Start" onPress={handleStart} color={COLORS.SUCCESS}/>
-                    <Text>Selected coordinates:</Text>
+                    {context.coordinates && context.coordinates.length > 0 ?
+                        <Text>Selected coordinates: {context.coordinates.join(', ')}</Text>
+                        : null
+                    }
                 </View>
             </View>
         </View>

@@ -26,14 +26,12 @@ const renderAnnotations = (annotationCoordinate) => {
 };
 
 function MapPreview({centerCoordinate, onLongPress, children}) {
-
     return (
             <MapboxGL.MapView
                 style={styles.map}
                 centerCoordinate={centerCoordinate}
                 onLongPress={onLongPress}
-                //<!--          centerCoordinate={context.coordinates}-->
-                //<!--          onPress={event => Alert.alert(event.geometry.coordinates.toString())}-->
+                scaleBarEnabled={false}
             >
                 <MapboxGL.Camera
                     zoomLevel={12}
