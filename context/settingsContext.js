@@ -50,7 +50,7 @@ function SettingsContextProvider({ children }) {
   function handleChangeCoordinates(newCoordinates) {
     setCoordinates(newCoordinates);
     if (!newCoordinates) {
-      setGameArea(newCoordinates);
+      setGameArea(null);
     }
   }
 

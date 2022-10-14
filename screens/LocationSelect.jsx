@@ -1,29 +1,65 @@
-import {View, StyleSheet, Text} from "react-native";
+import {View, StyleSheet, Text, Alert} from "react-native";
+import {useContext, useEffect} from "react";
+import Geolocation from 'react-native-geolocation-service';
+
 import MapPreview from "../components/MapPreview";
 import GameAreaShape from "../components/GameAreaShape";
 import CustomButton from "../components/CustomButton";
 import {COLORS} from "../utils/constants";
+import {SettingsContext} from "../context/settingsContext";
+import useRequestPermission from "../hooks/useRequestPermission";
 
 function LocationSelect() {
+    const context = useContext(SettingsContext);
+    const requestFineLocationPermission = useRequestPermission();
+
+    useEffect(() => {
+        requestFineLocationPermission();
+    }, []);
+
     function handleUseMyLocation() {
+        Geolocation.getCurrentPosition(
+            (position) => {
+                if (position) {
+                    const {coords} = position;
+                    const {latitude, longitude} = coords;
+                    if (latitude && longitude) {
+                        context.handleChangeCoordinates([longitude, latitude]);
+                    }
+                }
+            },
+            (error) => {
+                Alert.alert("Error while getting coordinates: " + error.code, error.message)
+            },
+            {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000})
     }
 
     function handlePreviewGameArea() {
+        context.createGameArea();
     }
 
     function handleClear() {
+        context.handleChangeCoordinates(null);
     }
 
-    function handleStart() {}
+    function handleStart() {
+    }
+
+    function handleLongPress(event) {
+        const { coordinates } = event.geometry;
+        if (coordinates.length  === 2) {
+            context.handleChangeCoordinates(coordinates);
+        }
+    }
 
     return (
         <View style={styles.container}>
             <View style={styles.map}>
                 <MapPreview
-                    onLongPress={() => console.log('onLongPress')}
-                    centerCoordinate={null}
+                    onLongPress={handleLongPress}
+                    centerCoordinate={context.coordinates}
                 >
-                    <GameAreaShape coordinates={null}/>
+                    <GameAreaShape coordinates={context.gameArea}/>
                 </MapPreview>
             </View>
             <View style={styles.buttonsContainer}>
