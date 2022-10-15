@@ -4,9 +4,9 @@ import {useContext, useState} from "react";
 import CustomButton from "../components/CustomButton";
 import {COLORS} from "../utils/constants";
 import {SettingsContext} from "../context/settingsContext";
-import Timer from "../components/Timer";
+import {createDateTime, validateStartTime} from "../utils/utils";
 
-function CreateNewGame({ navigation }) {
+function CreateNewGame({navigation}) {
     const [roundTime, setRoundTime] = useState('');
     const [distance, setDistance] = useState('');
     const [startTime, setStartTime] = useState('');
@@ -14,11 +14,20 @@ function CreateNewGame({ navigation }) {
     const context = useContext(SettingsContext);
 
     function handleSelectLocation() {
-        if (!distance) {
-            Alert.alert("please fill all required fields");
+        if (!distance || !startTime) {
+            Alert.alert("Please fill all required fields");
             return;
         }
-        context.setNewGameDetails({newDistance: distance})
+
+        // TODO: Валидация дат в прошлом
+        if (!validateStartTime(startTime)) {
+            Alert.alert("Start Time format is invalid");
+            return;
+        }
+
+        const formattedStartTime = createDateTime(startTime);
+        context.setNewGameDetails({newDistance: distance, newStartTime: formattedStartTime});
+
         navigation.navigate('LocationSelect');
     }
 
@@ -43,9 +52,10 @@ function CreateNewGame({ navigation }) {
                 onChangeText={setStartTime}
                 value={startTime}
                 label="Start time"
+                placeholder="HH.MM / HH MM"
             />
+
             <View style={styles.buttonContainer}>
-                <Timer />
                 <CustomButton
                     title="Select location"
                     onPress={handleSelectLocation}

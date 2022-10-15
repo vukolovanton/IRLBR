@@ -1,12 +1,15 @@
 import {Text, View} from "react-native";
 import useTimer from "../hooks/useTimer";
-import {memo} from "react";
+import {memo, useContext} from "react";
+import {SettingsContext} from "../context/settingsContext";
 
 function Timer() {
-    const { hours, minutes, seconds } = useTimer("2022-12-31T23:59:59");
+    const context = useContext(SettingsContext);
+    const { hours, minutes, seconds } = useTimer(context.startTime);
+
     return (
         <View>
-            <Text>Timer</Text>
+            <Text>Timer: {hours}:{minutes}:{seconds}</Text>
         </View>
     )
 }

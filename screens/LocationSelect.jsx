@@ -8,8 +8,9 @@ import CustomButton from "../components/CustomButton";
 import {COLORS} from "../utils/constants";
 import {SettingsContext} from "../context/settingsContext";
 import useRequestPermission from "../hooks/useRequestPermission";
+import CoordinatesView from "../components/CoordinatesView";
 
-function LocationSelect() {
+function LocationSelect({ navigation }) {
     const context = useContext(SettingsContext);
     const requestFineLocationPermission = useRequestPermission();
 
@@ -43,12 +44,13 @@ function LocationSelect() {
     }
 
     function handleStart() {
+        navigation.navigate('Prepare');
     }
 
     function handleLongPress(event) {
         const {coordinates} = event.geometry;
         if (coordinates.length === 2) {
-            context.handleChangeCoordinates(coordinates);
+            context.handleChangeCoordinates(coordinates, true);
             context.createGameArea({clear: true});
         }
     }
@@ -71,10 +73,7 @@ function LocationSelect() {
                 </View>
                 <View>
                     <CustomButton title="Start" onPress={handleStart} color={COLORS.SUCCESS}/>
-                    {context.coordinates && context.coordinates.length > 0 ?
-                        <Text>Selected coordinates: {context.coordinates.join(', ')}</Text>
-                        : null
-                    }
+                    <CoordinatesView coordinates={context.coordinates}/>
                 </View>
             </View>
         </View>

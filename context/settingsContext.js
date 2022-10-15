@@ -2,12 +2,14 @@ import {createContext, useState} from 'react';
 import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
 import {point, polygon} from '@turf/helpers';
 import {getCoordinatesForPointFromGivenDistance} from '../utils';
+import {trimCoordinates} from "../utils/utils";
 
 export const SettingsContext = createContext({
     coordinates: [],
     handleChangeCoordinates: () => {
     },
     gameArea: {},
+    startTime: '',
     createGameArea: () => {
     },
     checkIfPlayerIsInGameArea: () => {
@@ -64,8 +66,8 @@ function SettingsContextProvider({children}) {
         return result;
     }
 
-    function handleChangeCoordinates(newCoordinates) {
-        setCoordinates(newCoordinates);
+    function handleChangeCoordinates(newCoordinates, trim) {
+        setCoordinates(trim ? trimCoordinates(newCoordinates) : newCoordinates);
         if (!newCoordinates) {
             setGameArea(null);
         }
@@ -75,6 +77,7 @@ function SettingsContextProvider({children}) {
         coordinates,
         handleChangeCoordinates,
         gameArea,
+        startTime,
         createGameArea,
         checkIfPlayerIsInGameArea,
         setNewGameDetails,
