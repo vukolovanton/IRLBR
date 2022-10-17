@@ -25,22 +25,23 @@ const renderAnnotations = (annotationCoordinate) => {
     );
 };
 
-function MapPreview({centerCoordinate, onLongPress, children}) {
+function MapPreview({centerCoordinate, onLongPress, hideMainAnnotation = false, children}) {
     return (
-            <MapboxGL.MapView
-                style={styles.map}
+        <MapboxGL.MapView
+            style={styles.map}
+            centerCoordinate={centerCoordinate}
+            onLongPress={onLongPress}
+            scaleBarEnabled={false}
+        >
+            <MapboxGL.Camera
+                zoomLevel={12}
                 centerCoordinate={centerCoordinate}
-                onLongPress={onLongPress}
-                scaleBarEnabled={false}
-            >
-                <MapboxGL.Camera
-                    zoomLevel={12}
-                    centerCoordinate={centerCoordinate}
-                />
-                {/* <MapboxGL.PointAnnotation coordinate={temp1} /> */}
-                <View>{renderAnnotations(centerCoordinate)}</View>
-                {children}
-            </MapboxGL.MapView>
+            />
+            {
+                !hideMainAnnotation && <View>{renderAnnotations(centerCoordinate)}</View>
+            }
+            {children}
+        </MapboxGL.MapView>
     )
 }
 

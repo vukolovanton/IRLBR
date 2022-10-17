@@ -1,4 +1,4 @@
-import {View, StyleSheet, SafeAreaView, Text} from "react-native";
+import {View, StyleSheet, SafeAreaView, Text, Alert} from "react-native";
 import MapboxGL from '@rnmapbox/maps';
 
 import MapPreview from "../components/MapPreview";
@@ -7,6 +7,7 @@ import {SettingsContext} from "../context/settingsContext";
 import GameAreaShape from "../components/GameAreaShape";
 import Timer from "../components/Timer";
 import CoordinatesView from "../components/CoordinatesView";
+import CustomUserLocation from "../components/CustomUserLocation";
 
 function Prepare() {
     const context = useContext(SettingsContext);
@@ -19,8 +20,10 @@ function Prepare() {
                     <MapPreview
                         onLongPress={handleLongPress}
                         centerCoordinate={context.coordinates}
+                        hideMainAnnotation={true}
                         >
                         <MapboxGL.UserLocation renderMode="native" />
+                        <CustomUserLocation />
                         <GameAreaShape coordinates={context.gameArea}/>
                     </MapPreview>
                 </View>
