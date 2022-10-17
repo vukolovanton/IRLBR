@@ -1,4 +1,4 @@
-import {View, StyleSheet, SafeAreaView, Text, Alert} from "react-native";
+import {View, StyleSheet, SafeAreaView, Text} from "react-native";
 import MapboxGL from '@rnmapbox/maps';
 
 import MapPreview from "../components/MapPreview";
@@ -22,7 +22,6 @@ function Prepare() {
                         centerCoordinate={context.coordinates}
                         hideMainAnnotation={true}
                         >
-                        <MapboxGL.UserLocation renderMode="native" />
                         <CustomUserLocation />
                         <GameAreaShape coordinates={context.gameArea}/>
                     </MapPreview>
