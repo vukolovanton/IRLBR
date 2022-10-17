@@ -31,7 +31,6 @@ function MapPreview({centerCoordinate, onLongPress, hideMainAnnotation = false, 
             style={styles.map}
             centerCoordinate={centerCoordinate}
             onLongPress={onLongPress}
-            scaleBarEnabled={false}
             rotateEnabled={false}
         >
             <MapboxGL.Camera

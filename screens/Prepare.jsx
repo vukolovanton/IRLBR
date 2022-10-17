@@ -1,13 +1,12 @@
 import {View, StyleSheet, SafeAreaView, Text} from "react-native";
+import {useContext} from "react";
 import MapboxGL from '@rnmapbox/maps';
 
 import MapPreview from "../components/MapPreview";
-import {useContext} from "react";
 import {SettingsContext} from "../context/settingsContext";
 import GameAreaShape from "../components/GameAreaShape";
 import Timer from "../components/Timer";
 import CoordinatesView from "../components/CoordinatesView";
-import CustomUserLocation from "../components/CustomUserLocation";
 
 function Prepare({ navigation }) {
     const context = useContext(SettingsContext);
@@ -28,14 +27,13 @@ function Prepare({ navigation }) {
                     hideMainAnnotation={true}
                 >
                     <MapboxGL.UserLocation/>
-                    <CustomUserLocation/>
                     <GameAreaShape coordinates={context.gameArea}/>
                 </MapPreview>
             </View>
             <View style={styles.details}>
                 <Text style={styles.title}>BE READY</Text>
                 <CoordinatesView coordinates={context.coordinates}/>
-                <Timer callback={navigaeToGameScreen} />
+                <Timer time={context.startTime} callback={navigaeToGameScreen} />
             </View>
         </SafeAreaView>
     )
@@ -48,6 +46,7 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         color: 'black',
+        marginBottom: 24,
     },
     container: {
         flex: 1,
@@ -58,6 +57,7 @@ const styles = StyleSheet.create({
     details: {
         flex: 2,
         alignItems: 'center',
+        justifyContent: 'center',
         paddingHorizontal: 40,
         paddingVertical: 20,
     }

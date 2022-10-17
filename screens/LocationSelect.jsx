@@ -36,7 +36,7 @@ function LocationSelect({ navigation }) {
     }
 
     function handlePreviewGameArea() {
-        context.createGameArea();
+        context.createGameArea(context.distance);
     }
 
     function handleClear() {
@@ -44,14 +44,14 @@ function LocationSelect({ navigation }) {
     }
 
     function handleStart() {
-        navigation.navigate('Game');
+        navigation.navigate('Prepare');
     }
 
     function handleLongPress(event) {
         const {coordinates} = event.geometry;
         if (coordinates.length === 2) {
             context.handleChangeCoordinates(coordinates, true);
-            context.createGameArea({clear: true});
+            context.createGameArea(context.distance, {clear: true});
         }
     }
 

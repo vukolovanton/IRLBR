@@ -4,7 +4,7 @@ import {useContext, useState} from "react";
 import CustomButton from "../components/CustomButton";
 import {COLORS} from "../utils/constants";
 import {SettingsContext} from "../context/settingsContext";
-import {createDateTime, validateStartTime} from "../utils/utils";
+import {createDateTime, createRoundTime, validateStartTime} from "../utils/utils";
 
 function CreateNewGame({navigation}) {
     const [roundTime, setRoundTime] = useState('');
@@ -19,14 +19,19 @@ function CreateNewGame({navigation}) {
             return;
         }
 
-        // TODO: Валидация дат в прошлом
+        // TODO: Валидация дат в прошлом и что такое время вообще существует
         if (!validateStartTime(startTime)) {
             Alert.alert("Start Time format is invalid");
             return;
         }
 
         const formattedStartTime = createDateTime(startTime);
-        context.setNewGameDetails({newDistance: distance, newStartTime: formattedStartTime});
+
+        context.setNewGameDetails({
+            newDistance: distance,
+            newStartTime: formattedStartTime,
+            newRoundTime: roundTime,
+        });
 
         navigation.navigate('LocationSelect');
     }
@@ -36,7 +41,6 @@ function CreateNewGame({navigation}) {
             <CustomInput
                 onChangeText={setRoundTime}
                 value={roundTime}
-                keyboardType="default"
                 label="Round time"
                 placeholder="minutes"
             />

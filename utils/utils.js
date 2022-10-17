@@ -12,6 +12,14 @@ export function createDateTime(customTimeFormat) {
     return new Date(year, month, day, timeArr[0], timeArr[1]);
 }
 
+export function createRoundTime(roundTime) {
+    const firstRound = new Date(Date.now() + roundTime * 60000);
+    const secoundRound = new Date(Date.now() + (roundTime * 2) * 60000);
+    const thirdRound = new Date(Date.now() + (roundTime * 3) * 60000);
+
+    return [firstRound, secoundRound, thirdRound];
+}
+
 export function validateStartTime(customTimeFormat) {
     if (!customTimeFormat.length === 5) return false;
 //    if (customTimeFormat.charAt(2) !== '.' || customTimeFormat.charAt(2) !== ' ' || customTimeFormat.charAt(2) !== ',') return false;

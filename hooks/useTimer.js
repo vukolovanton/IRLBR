@@ -1,4 +1,5 @@
 import {useState, useEffect, useRef} from "react";
+import BackgroundTimer from 'react-native-background-timer';
 
 const SECOND = 1_000;
 const MINUTE = SECOND * 60;
@@ -9,12 +10,12 @@ export default function useTimer(deadline, callback) {
     const intervalRef = useRef();
 
     useEffect(() => {
-        intervalRef.current = setInterval(() => {
+        intervalRef.current = BackgroundTimer.setInterval(() => {
             setTimespan((_timespan) => _timespan - SECOND);
         }, SECOND);
 
         return () => {
-            clearInterval(intervalRef.current);
+            BackgroundTimer.clearInterval(intervalRef.current);
         };
     }, [SECOND, deadline]);
 
@@ -25,7 +26,7 @@ export default function useTimer(deadline, callback) {
 
     useEffect(() => {
         if (hours === 0 && minutes === 0 && seconds === 0) {
-            clearInterval(intervalRef.current);
+            BackgroundTimer.clearInterval(intervalRef.current);
             callback();
         }
     }, [timespan]);

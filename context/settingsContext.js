@@ -9,12 +9,15 @@ export const SettingsContext = createContext({
     handleChangeCoordinates: () => {
     },
     gameArea: {},
+    distance: '',
     startTime: '',
+    roundTime: '',
     createGameArea: () => {
     },
     checkIfPlayerIsInGameArea: () => {
     },
     setNewGameDetails: ({newRoundTime, newDistance, newStartTime}) => {},
+    shrinkGameArea: () => {},
 });
 
 function SettingsContextProvider({children}) {
@@ -30,17 +33,17 @@ function SettingsContextProvider({children}) {
         setStartTime(newStartTime);
     }
 
-    function createGameArea(options) {
+    function createGameArea(width, options) {
         if (options?.clear) {
             setGameArea(null);
             return;
         }
         if (!coordinates || coordinates.length === 0) return;
-        const temp1 = getCoordinatesForPointFromGivenDistance(coordinates, Math.round(distance / 2), 0);
-        const initialCoordinate = getCoordinatesForPointFromGivenDistance(temp1, Math.round(distance / 2), -90);
-        const toTheRight = getCoordinatesForPointFromGivenDistance(initialCoordinate, distance, 90);
-        const toTheBottom = getCoordinatesForPointFromGivenDistance(toTheRight, distance, -180);
-        const toTheLeft = getCoordinatesForPointFromGivenDistance(toTheBottom, distance, -90);
+        const temp1 = getCoordinatesForPointFromGivenDistance(coordinates, Math.round(width / 2), 0);
+        const initialCoordinate = getCoordinatesForPointFromGivenDistance(temp1, Math.round(width / 2), -90);
+        const toTheRight = getCoordinatesForPointFromGivenDistance(initialCoordinate, width, 90);
+        const toTheBottom = getCoordinatesForPointFromGivenDistance(toTheRight, width, -180);
+        const toTheLeft = getCoordinatesForPointFromGivenDistance(toTheBottom, width, -90);
 
         setGameArea({
             type: "Feature",
@@ -73,14 +76,23 @@ function SettingsContextProvider({children}) {
         }
     }
 
+    function shrinkGameArea() {
+        const newDistance = Math.round(distance / 2);
+        setDistance(newDistance);
+        createGameArea(newDistance)
+    }
+
     const value = {
         coordinates,
         handleChangeCoordinates,
         gameArea,
+        distance,
         startTime,
+        roundTime,
         createGameArea,
         checkIfPlayerIsInGameArea,
         setNewGameDetails,
+        shrinkGameArea,
     }
 
     return (

@@ -1,11 +1,9 @@
 import {Text, View} from "react-native";
 import useTimer from "../hooks/useTimer";
-import {memo, useContext} from "react";
-import {SettingsContext} from "../context/settingsContext";
+import {memo} from "react";
 
-function Timer({ callback }) {
-    const context = useContext(SettingsContext);
-    const { hours, minutes, seconds } = useTimer(context.startTime, callback);
+function Timer({ time, callback }) {
+    const { hours, minutes, seconds } = useTimer(time, callback);
 
     return (
         <View>

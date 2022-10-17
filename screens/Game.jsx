@@ -1,16 +1,49 @@
-import {View, StyleSheet, SafeAreaView} from "react-native";
+import {View, StyleSheet, SafeAreaView, Alert, Text} from "react-native";
 import MapboxGL from '@rnmapbox/maps';
+
 import MapPreview from "../components/MapPreview";
 import GameAreaShape from "../components/GameAreaShape";
-import CustomUserLocation from "../components/CustomUserLocation";
-import {useContext} from "react";
+import {useContext, useEffect, useState} from "react";
 import {SettingsContext} from "../context/settingsContext";
+import Timer from "../components/Timer";
+import {createRoundTime} from "../utils/utils";
+import CustomButton from "../components/CustomButton";
+import {COLORS} from "../utils/constants";
 
-function Game() {
+const ROUND = {
+    FIRST: 'FIRST',
+    SECOND: 'SECOND',
+    THIRD: 'THIRD',
+    END: 'END',
+}
+
+function Game({navigation}) {
     const context = useContext(SettingsContext);
+    const [rounds, setRounds] = useState(null);
+    const [currentRound, setCurrentRound] = useState(null);
 
     function handleLongPress() {
     }
+
+    function timerCallback(roundEnum) {
+        setCurrentRound(roundEnum);
+
+        if (roundEnum === ROUND.END) {
+            navigation.navigate('Scoreboard');
+        } else {
+            context.shrinkGameArea();
+        }
+    }
+
+    function handleDeadPress() {
+        navigation.navigate('Initial');
+    }
+
+    useEffect(() => {
+        const temp = createRoundTime(context.roundTime);
+        setRounds(temp);
+        setCurrentRound(ROUND.FIRST);
+    }, []);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -21,12 +54,23 @@ function Game() {
                     hideMainAnnotation={true}
                 >
                     <MapboxGL.UserLocation/>
-                    <CustomUserLocation/>
                     <GameAreaShape coordinates={context.gameArea}/>
                 </MapPreview>
             </View>
-            <View style={styles.details}>
-            </View>
+            {rounds && <View style={styles.details}>
+                <Text style={styles.title}>{currentRound} ROUND</Text>
+
+                {currentRound === ROUND.FIRST &&
+                    <Timer callback={timerCallback.bind(this, ROUND.SECOND)} time={rounds[0]}/>}
+                {currentRound === ROUND.SECOND &&
+                    <Timer callback={timerCallback.bind(this, ROUND.THIRD)} time={rounds[1]}/>}
+                {currentRound === ROUND.THIRD &&
+                    <Timer callback={timerCallback.bind(this, ROUND.END)} time={rounds[2]}/>}
+
+                <View style={styles.button}>
+                    <CustomButton title="I'm dead" onPress={handleDeadPress} color={COLORS.ERROR}/>
+                </View>
+            </View>}
         </SafeAreaView>
     )
 }
@@ -45,5 +89,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 40,
         paddingVertical: 20,
+        justifyContent: 'center',
+    },
+    title: {
+        fontWeight: 'bold',
+        color: 'black',
+    },
+    button: {
+        marginTop: 20,
     }
 })
