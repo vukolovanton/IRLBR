@@ -4,8 +4,6 @@ import {
   Text,
   Button,
 } from 'react-native';
-import GameReady from '../components/GameReady';
-import LocationInput from '../components/LocationInput';
 import useRequestPermission from "../hooks/useRequestPermission";
 
 function Settings() {
@@ -14,9 +12,6 @@ function Settings() {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Game Settings</Text>
-      <LocationInput />
-      <GameReady />
-
       <View style={styles.additional}>
         <Text style={styles.header}>Additional settings</Text>
         <Button

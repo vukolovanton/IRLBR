@@ -1,22 +1,15 @@
-import {View, StyleSheet, SafeAreaView, Text} from "react-native";
+import {View, StyleSheet, SafeAreaView} from "react-native";
 import MapboxGL from '@rnmapbox/maps';
-
 import MapPreview from "../components/MapPreview";
+import GameAreaShape from "../components/GameAreaShape";
+import CustomUserLocation from "../components/CustomUserLocation";
 import {useContext} from "react";
 import {SettingsContext} from "../context/settingsContext";
-import GameAreaShape from "../components/GameAreaShape";
-import Timer from "../components/Timer";
-import CoordinatesView from "../components/CoordinatesView";
-import CustomUserLocation from "../components/CustomUserLocation";
 
-function Prepare({ navigation }) {
+function Game() {
     const context = useContext(SettingsContext);
 
     function handleLongPress() {
-    }
-
-    function navigaeToGameScreen() {
-        navigation.navigate('Game');
     }
 
     return (
@@ -33,27 +26,19 @@ function Prepare({ navigation }) {
                 </MapPreview>
             </View>
             <View style={styles.details}>
-                <Text style={styles.title}>BE READY</Text>
-                <CoordinatesView coordinates={context.coordinates}/>
-                <Timer callback={navigaeToGameScreen} />
             </View>
         </SafeAreaView>
     )
 }
 
-export default Prepare;
+export default Game;
 
 const styles = StyleSheet.create({
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: 'black',
-    },
     container: {
         flex: 1,
     },
     map: {
-        flex: 3,
+        flex: 5,
     },
     details: {
         flex: 2,

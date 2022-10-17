@@ -4,7 +4,6 @@ import Geolocation from 'react-native-geolocation-service';
 import {useEffect, useRef, useState} from "react";
 
 const renderAnnotations = (annotationCoordinate) => {
-    console.log(annotationCoordinate, 'annotationCoordinate')
     if (!annotationCoordinate) return null;
     return (
         <MapboxGL.PointAnnotation
@@ -37,7 +36,6 @@ function CustomUserLocation() {
                         const { coords } = position;
                         const { latitude, longitude } = coords;
                         if (latitude && longitude) {
-                            console.log( watcherRef.current, 'set coordinates?')
                             setCoordinates([longitude, latitude])
                         }
                     }
@@ -55,7 +53,6 @@ function CustomUserLocation() {
 
         return () => {
             Geolocation.clearWatch(watcherRef.current);
-            Geolocation.stopObserving();
         }
     }, [])
 

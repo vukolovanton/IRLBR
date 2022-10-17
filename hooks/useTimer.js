@@ -26,6 +26,7 @@ export default function useTimer(deadline, callback) {
     useEffect(() => {
         if (hours === 0 && minutes === 0 && seconds === 0) {
             clearInterval(intervalRef.current);
+            callback();
         }
     }, [timespan]);
 

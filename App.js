@@ -7,6 +7,7 @@ import Initial from "./screens/Initial";
 import CreateNewGame from "./screens/CreateNewGame";
 import LocationSelect from "./screens/LocationSelect";
 import Prepare from "./screens/Prepare";
+import Game from "./screens/Game";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +22,7 @@ const App = () => {
                     <Stack.Screen name="CreateNewGame" component={CreateNewGame}/>
                     <Stack.Screen name="LocationSelect" component={LocationSelect}/>
                     <Stack.Screen name="Prepare" component={Prepare}/>
+                    <Stack.Screen name="Game" component={Game}/>
                 </Stack.Navigator>
             </NavigationContainer>
         </SettingsContextProvider>

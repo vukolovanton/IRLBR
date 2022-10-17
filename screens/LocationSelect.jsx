@@ -1,4 +1,4 @@
-import {View, StyleSheet, Text, Alert} from "react-native";
+import {View, StyleSheet, Alert} from "react-native";
 import {useContext, useEffect} from "react";
 import Geolocation from 'react-native-geolocation-service';
 
@@ -44,7 +44,7 @@ function LocationSelect({ navigation }) {
     }
 
     function handleStart() {
-        navigation.navigate('Prepare');
+        navigation.navigate('Game');
     }
 
     function handleLongPress(event) {
