@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1036440428698",
+    "project_id": "irlbr-ee1b4",
+    "storage_bucket": "irlbr-ee1b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1036440428698:android:019fda6c8b57be02ea7f23",
+        "android_client_info": {
+          "package_name": "com.irlbr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1036440428698-c3fju09bas8lcfp757lko2atv2hf0ie9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.irlbr",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "1036440428698-uhm3hln2rlsg504cf4lh0nhph4sbijd7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaLeRJpFOb3fzlJyGG9U3fQUifSiX989Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1036440428698-uhm3hln2rlsg504cf4lh0nhph4sbijd7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,6 +1,7 @@
 import {View, StyleSheet, Alert} from "react-native";
 import {useContext, useEffect} from "react";
 import Geolocation from 'react-native-geolocation-service';
+import firestore from '@react-native-firebase/firestore';
 
 import MapPreview from "../components/MapPreview";
 import GameAreaShape from "../components/GameAreaShape";
@@ -10,7 +11,7 @@ import {SettingsContext} from "../context/settingsContext";
 import useRequestPermission from "../hooks/useRequestPermission";
 import CoordinatesView from "../components/CoordinatesView";
 
-function LocationSelect({ navigation }) {
+function LocationSelect({navigation}) {
     const context = useContext(SettingsContext);
     const requestFineLocationPermission = useRequestPermission();
 
@@ -43,6 +44,30 @@ function LocationSelect({ navigation }) {
         context.handleChangeCoordinates(null);
     }
 
+    function postCurrentGame() {
+        const gameId = Math.floor(Math.random() * 1000000);
+        const data = {
+            gameId: gameId,
+            startTime: JSON.stringify(context.startTime),
+            roundTime: context.roundTime,
+            distance: context.distance,
+            coordinates: context.coordinates,
+            gameAreaCoordinates: JSON.stringify(context.gameArea.geometry.coordinates[0]),
+        }
+
+        firestore()
+        .collection('Games')
+        .doc(gameId.toString())
+        .set(data)
+        .then(() => {
+            console.log('Game created!');
+            handleStart();
+        })
+        .catch((err) => {
+            Alert.alert(err)
+        });
+    }
+
     function handleStart() {
         navigation.navigate('Prepare');
     }
@@ -72,7 +97,7 @@ function LocationSelect({ navigation }) {
                     <CustomButton title="Clear" onPress={handleClear} color={COLORS.ERROR}/>
                 </View>
                 <View>
-                    <CustomButton title="Start" onPress={handleStart} color={COLORS.SUCCESS}/>
+                    <CustomButton title="Start" onPress={postCurrentGame} color={COLORS.SUCCESS}/>
                     <CoordinatesView coordinates={context.coordinates}/>
                 </View>
             </View>

@@ -8,6 +8,7 @@ import LocationSelect from "./screens/LocationSelect";
 import Prepare from "./screens/Prepare";
 import Game from "./screens/Game";
 import Scoreboard from "./screens/Scoreboard";
+import Join from "./screens/Join";
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,7 @@ const App = () => {
                     <Stack.Screen name="Prepare" component={Prepare}/>
                     <Stack.Screen name="Game" component={Game}/>
                     <Stack.Screen name="Scoreboard" component={Scoreboard}/>
+                    <Stack.Screen name="Join" component={Join}/>
                 </Stack.Navigator>
             </NavigationContainer>
         </SettingsContextProvider>
