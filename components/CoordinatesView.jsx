@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     container: {},
     text: {
         fontSize: 16,
-        fontWeight: 'bold',
+        fontFamily: 'Audiowide',
         color: 'black'
     },
 })

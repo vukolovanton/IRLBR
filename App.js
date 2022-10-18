@@ -9,26 +9,29 @@ import Prepare from "./screens/Prepare";
 import Game from "./screens/Game";
 import Scoreboard from "./screens/Scoreboard";
 import Join from "./screens/Join";
+import {StatusBar} from "react-native";
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
-//TODO: проверить интеграцию Status Bar
     return (
-        <SettingsContextProvider>
-            <NavigationContainer>
-                <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Initial">
-                    <Stack.Screen name="Initial" component={Initial}/>
-                    <Stack.Screen name="Settings" component={Settings}/>
-                    <Stack.Screen name="CreateNewGame" component={CreateNewGame}/>
-                    <Stack.Screen name="LocationSelect" component={LocationSelect}/>
-                    <Stack.Screen name="Prepare" component={Prepare}/>
-                    <Stack.Screen name="Game" component={Game}/>
-                    <Stack.Screen name="Scoreboard" component={Scoreboard}/>
-                    <Stack.Screen name="Join" component={Join}/>
-                </Stack.Navigator>
-            </NavigationContainer>
-        </SettingsContextProvider>
+        <>
+        <StatusBar style="light-content" />
+            <SettingsContextProvider>
+                <NavigationContainer>
+                    <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Initial">
+                        <Stack.Screen name="Initial" component={Initial}/>
+                        <Stack.Screen name="Settings" component={Settings}/>
+                        <Stack.Screen name="CreateNewGame" component={CreateNewGame}/>
+                        <Stack.Screen name="LocationSelect" component={LocationSelect}/>
+                        <Stack.Screen name="Prepare" component={Prepare}/>
+                        <Stack.Screen name="Game" component={Game}/>
+                        <Stack.Screen name="Scoreboard" component={Scoreboard}/>
+                        <Stack.Screen name="Join" component={Join}/>
+                    </Stack.Navigator>
+                </NavigationContainer>
+            </SettingsContextProvider>
+        </>
     );
 };
 

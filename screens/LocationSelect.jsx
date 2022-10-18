@@ -45,7 +45,10 @@ function LocationSelect({navigation}) {
     }
 
     function postCurrentGame() {
-        const gameId = Math.floor(Math.random() * 1000000);
+        if (!context.coordinates) return;
+
+        const gameId = Math.floor(100000 + Math.random() * 900000);
+
         const data = {
             gameId: gameId,
             startTime: JSON.stringify(context.startTime),
@@ -97,7 +100,9 @@ function LocationSelect({navigation}) {
                 </View>
                 <View>
                     <CustomButton title="Start" onPress={postCurrentGame} color={COLORS.SUCCESS}/>
+                    <View style={styles.bottomContainer}>
                     <CoordinatesView coordinates={context.coordinates}/>
+                    </View>
                 </View>
             </View>
         </View>
@@ -112,6 +117,11 @@ const styles = StyleSheet.create({
     },
     map: {
         flex: 3,
+    },
+    bottomContainer: {
+        alignItems: 'center',
+        marginBottom: 10,
+        marginTop: 10,
     },
     buttonsContainer: {
         flex: 2,

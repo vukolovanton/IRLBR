@@ -15,14 +15,13 @@ function CreateNewGame({navigation}) {
     const context = useContext(SettingsContext);
 
     function handleSelectLocation() {
-        if (!distance || !startTime) {
+        if (!distance || !startTime || !roundTime) {
             Alert.alert("Please fill all required fields");
             return;
         }
 
-        // TODO: Валидация дат в прошлом и что такое время вообще существует
         if (!validateStartTime(startTime)) {
-            Alert.alert("Start Time format is invalid");
+            Alert.alert("Start Time is invalid");
             return;
         }
 

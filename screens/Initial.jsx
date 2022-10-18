@@ -1,9 +1,9 @@
-import {View, StyleSheet, Text} from "react-native";
+import {View, StyleSheet, Text, SafeAreaView} from "react-native";
 import CustomButton from "../components/CustomButton";
 
 function Initial({navigation}) {
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <Text style={styles.logo}>IRLBR</Text>
             <View style={styles.innerContainer}>
                 <CustomButton
@@ -14,7 +14,7 @@ function Initial({navigation}) {
             <View style={styles.bottomContainer}>
                 <CustomButton title='Settings' onPress={() => navigation.navigate('Settings')}/>
             </View>
-        </View>
+        </SafeAreaView>
     )
 }
 

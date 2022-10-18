@@ -1,6 +1,4 @@
 export function createDateTime(customTimeFormat) {
-    if (!validateStartTime(customTimeFormat)) return false;
-
     const year = new Date().getFullYear();
     const month = new Date().getMonth();
     const day = new Date().getDate();
@@ -22,7 +20,14 @@ export function createRoundTime(roundTime) {
 
 export function validateStartTime(customTimeFormat) {
     if (!customTimeFormat.length === 5) return false;
-//    if (customTimeFormat.charAt(2) !== '.' || customTimeFormat.charAt(2) !== ' ' || customTimeFormat.charAt(2) !== ',') return false;
+    const hh = customTimeFormat.slice(0, 2);
+    const mm = customTimeFormat.slice(-2);
+
+    if (Number(hh) < 0 || Number(hh) >= 24) return false;
+    if (Number(mm) < 0 || Number(mm) > 59) return false;
+
+    if (createDateTime(customTimeFormat) < Date.now()) return false;
+
     return true;
 }
 

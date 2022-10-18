@@ -35,15 +35,17 @@ function Game({navigation}) {
         } else {
             const isInGameArea = context.checkIfPlayerIsInGameArea(playerCoordinates);
             if (!isInGameArea) {
-                navigation.navigate('Scoreboard');
+                abortGame();
                 return;
             }
             context.shrinkGameArea();
         }
     }
 
-    function handleDeadPress() {
-        navigation.navigate('Initial');
+    function abortGame() {
+        navigation.navigate('Scoreboard', {
+            failed: true
+        });
     }
 
     useEffect(() => {
@@ -79,7 +81,7 @@ function Game({navigation}) {
                     <Timer callback={timerCallback.bind(this, ROUND.END)} time={rounds[2]}/>}
 
                 <View style={styles.button}>
-                    <CustomButton title="I'm dead" onPress={handleDeadPress} color={COLORS.ERROR}/>
+                    <CustomButton title="I'm dead" onPress={abortGame} color={COLORS.ERROR}/>
                 </View>
             </View>}
         </SafeAreaView>

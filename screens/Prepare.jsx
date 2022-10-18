@@ -6,15 +6,16 @@ import MapPreview from "../components/MapPreview";
 import {SettingsContext} from "../context/settingsContext";
 import GameAreaShape from "../components/GameAreaShape";
 import Timer from "../components/Timer";
+import GameIdView from "../components/GameIdView";
 
-function Prepare({ route, navigation }) {
+function Prepare({route, navigation}) {
     const context = useContext(SettingsContext);
-    const { gameId } = route.params;
+    const {gameId} = route.params;
 
     function handleLongPress() {
     }
 
-    function navigaeToGameScreen() {
+    function navigateToGameScreen() {
         navigation.navigate('Game');
     }
 
@@ -38,8 +39,10 @@ function Prepare({ route, navigation }) {
             </View>
             <View style={styles.details}>
                 <Text style={styles.title}>BE READY</Text>
-                <Text>{gameId}</Text>
-                <Timer time={context.startTime} callback={navigaeToGameScreen} />
+                <GameIdView gameId={gameId}/>
+                <View style={styles.innerContainer}>
+                    <Timer time={context.startTime} callback={navigateToGameScreen}/>
+                </View>
             </View>
         </SafeAreaView>
     )
@@ -50,12 +53,15 @@ export default Prepare;
 const styles = StyleSheet.create({
     title: {
         fontSize: 24,
-        fontWeight: 'bold',
         color: 'black',
+        fontFamily: 'Audiowide',
         marginBottom: 24,
     },
     container: {
         flex: 1,
+    },
+    innerContainer: {
+        marginTop: 24,
     },
     map: {
         flex: 3,
