@@ -1,15 +1,15 @@
 import {View, StyleSheet, SafeAreaView, Text} from "react-native";
-import {useContext} from "react";
+import {useContext, useEffect} from "react";
 import MapboxGL from '@rnmapbox/maps';
 
 import MapPreview from "../components/MapPreview";
 import {SettingsContext} from "../context/settingsContext";
 import GameAreaShape from "../components/GameAreaShape";
 import Timer from "../components/Timer";
-import CoordinatesView from "../components/CoordinatesView";
 
-function Prepare({ navigation }) {
+function Prepare({ route, navigation }) {
     const context = useContext(SettingsContext);
+    const { gameId } = route.params;
 
     function handleLongPress() {
     }
@@ -17,6 +17,12 @@ function Prepare({ navigation }) {
     function navigaeToGameScreen() {
         navigation.navigate('Game');
     }
+
+    useEffect(() => {
+        if (!context.gameArea) {
+            context.createGameArea(context.distance);
+        }
+    }, []);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -32,7 +38,7 @@ function Prepare({ navigation }) {
             </View>
             <View style={styles.details}>
                 <Text style={styles.title}>BE READY</Text>
-                <CoordinatesView coordinates={context.coordinates}/>
+                <Text>{gameId}</Text>
                 <Timer time={context.startTime} callback={navigaeToGameScreen} />
             </View>
         </SafeAreaView>

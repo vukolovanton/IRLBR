@@ -38,6 +38,7 @@ function SettingsContextProvider({children}) {
             setGameArea(null);
             return;
         }
+
         if (!coordinates || coordinates.length === 0) return;
         const temp1 = getCoordinatesForPointFromGivenDistance(coordinates, Math.round(width / 2), 0);
         const initialCoordinate = getCoordinatesForPointFromGivenDistance(temp1, Math.round(width / 2), -90);

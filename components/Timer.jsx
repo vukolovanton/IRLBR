@@ -7,7 +7,7 @@ function Timer({ time, callback }) {
 
     return (
         <View>
-            <Text>Timer: {twoDigits(hours)}:{twoDigits(minutes)}:{twoDigits(seconds)}</Text>
+            <Text>{twoDigits(hours)}:{twoDigits(minutes)}:{twoDigits(seconds)}</Text>
         </View>
     )
 }

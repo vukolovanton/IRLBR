@@ -1,4 +1,4 @@
-import {View, StyleSheet, SafeAreaView, Alert, Text} from "react-native";
+import {View, StyleSheet, SafeAreaView, Text} from "react-native";
 import firestore from '@react-native-firebase/firestore';
 import {useContext, useState} from "react";
 
@@ -7,7 +7,7 @@ import CustomButton from "../components/CustomButton";
 import {COLORS} from "../utils/constants";
 import {SettingsContext} from "../context/settingsContext";
 
-function Join({ navigation }) {
+function Join({navigation}) {
     const [gameId, setGameId] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
@@ -37,15 +37,14 @@ function Join({ navigation }) {
                 });
 
                 context.handleChangeCoordinates(data.coordinates);
-                context.createGameArea(Number(data.distance));
 
                 setIsLoading(false);
                 setGameId('');
 
-                navigation.navigate('Prepare');
+                navigation.navigate('Prepare', {gameId: data.gameId,});
             })
             .catch((err) => {
-                Alert.alert(err);
+                console.log(err, '<--ERROR-->')
                 setIsLoading(false);
                 setGameId('');
             })

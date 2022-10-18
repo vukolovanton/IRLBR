@@ -60,16 +60,15 @@ function LocationSelect({navigation}) {
         .doc(gameId.toString())
         .set(data)
         .then(() => {
-            console.log('Game created!');
-            handleStart();
+            handleStart(gameId);
         })
         .catch((err) => {
             Alert.alert(err)
         });
     }
 
-    function handleStart() {
-        navigation.navigate('Prepare');
+    function handleStart(gameId) {
+        navigation.navigate('Prepare', { gameId });
     }
 
     function handleLongPress(event) {
