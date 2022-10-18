@@ -14,7 +14,7 @@ export const SettingsContext = createContext({
     roundTime: '',
     createGameArea: () => {
     },
-    checkIfPlayerIsInGameArea: () => {
+    checkIfPlayerIsInGameArea: (playerCoordinates) => {
     },
     setNewGameDetails: ({newRoundTime, newDistance, newStartTime}) => {},
     shrinkGameArea: () => {},

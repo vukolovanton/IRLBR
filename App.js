@@ -16,7 +16,7 @@ const App = () => {
     return (
         <SettingsContextProvider>
             <NavigationContainer>
-                <Stack.Navigator screenOptions={{headerShown: true}} initialRouteName="Initial">
+                <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Initial">
                     <Stack.Screen name="Initial" component={Initial}/>
                     <Stack.Screen name="Settings" component={Settings}/>
                     <Stack.Screen name="CreateNewGame" component={CreateNewGame}/>

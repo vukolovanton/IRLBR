@@ -9,6 +9,7 @@ import Timer from "../components/Timer";
 import {createRoundTime} from "../utils/utils";
 import CustomButton from "../components/CustomButton";
 import {COLORS} from "../utils/constants";
+import CustomUserLocation from "../components/CustomUserLocation";
 
 const ROUND = {
     FIRST: 'FIRST',
@@ -21,6 +22,7 @@ function Game({navigation}) {
     const context = useContext(SettingsContext);
     const [rounds, setRounds] = useState(null);
     const [currentRound, setCurrentRound] = useState(null);
+    const [playerCoordinates, setPlayerCoordinates] = useState(null);
 
     function handleLongPress() {
     }
@@ -31,6 +33,11 @@ function Game({navigation}) {
         if (roundEnum === ROUND.END) {
             navigation.navigate('Scoreboard');
         } else {
+            const isInGameArea = context.checkIfPlayerIsInGameArea(playerCoordinates);
+            if (!isInGameArea) {
+                navigation.navigate('Scoreboard');
+                return;
+            }
             context.shrinkGameArea();
         }
     }
@@ -54,6 +61,10 @@ function Game({navigation}) {
                     hideMainAnnotation={true}
                 >
                     <MapboxGL.UserLocation/>
+                    <CustomUserLocation
+                        playerCoordinates={playerCoordinates}
+                        setPlayerCoordinates={setPlayerCoordinates}
+                    />
                     <GameAreaShape coordinates={context.gameArea}/>
                 </MapPreview>
             </View>

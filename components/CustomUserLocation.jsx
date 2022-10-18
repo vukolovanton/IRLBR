@@ -25,8 +25,7 @@ const renderAnnotations = (annotationCoordinate) => {
     );
 };
 
-function CustomUserLocation() {
-    const [coordinates, setCoordinates] = useState();
+function CustomUserLocation({ playerCoordinates, setPlayerCoordinates }) {
     const watcherRef = useRef();
 
     function getCurrentCoordinates() {
@@ -36,7 +35,7 @@ function CustomUserLocation() {
                         const { coords } = position;
                         const { latitude, longitude } = coords;
                         if (latitude && longitude) {
-                            setCoordinates([longitude, latitude])
+                            setPlayerCoordinates([longitude, latitude]);
                         }
                     }
                 },
@@ -57,7 +56,7 @@ function CustomUserLocation() {
     }, [])
 
     return (
-        <View>{renderAnnotations(coordinates)}</View>
+        <View>{renderAnnotations(playerCoordinates)}</View>
     )
 }
 

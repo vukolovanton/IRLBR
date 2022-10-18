@@ -4,7 +4,7 @@ import {useContext, useState} from "react";
 import CustomButton from "../components/CustomButton";
 import {COLORS} from "../utils/constants";
 import {SettingsContext} from "../context/settingsContext";
-import {createDateTime, createRoundTime, validateStartTime} from "../utils/utils";
+import {createDateTime, validateStartTime} from "../utils/utils";
 
 function CreateNewGame({navigation}) {
     const [roundTime, setRoundTime] = useState('');
