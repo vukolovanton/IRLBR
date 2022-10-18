@@ -6,10 +6,11 @@ import firestore from '@react-native-firebase/firestore';
 import MapPreview from "../components/MapPreview";
 import GameAreaShape from "../components/GameAreaShape";
 import CustomButton from "../components/CustomButton";
-import {COLORS} from "../utils/constants";
+import {CARD_STYLE, COLORS} from "../utils/constants";
 import {SettingsContext} from "../context/settingsContext";
 import useRequestPermission from "../hooks/useRequestPermission";
 import CoordinatesView from "../components/CoordinatesView";
+import IconButton from "../components/IconButton";
 
 function LocationSelect({navigation}) {
     const context = useContext(SettingsContext);
@@ -37,6 +38,10 @@ function LocationSelect({navigation}) {
     }
 
     function handlePreviewGameArea() {
+        if (!context.coordinates) {
+            Alert.alert('Select center point first');
+            return;
+        }
         context.createGameArea(context.distance);
     }
 
@@ -45,7 +50,10 @@ function LocationSelect({navigation}) {
     }
 
     function postCurrentGame() {
-        if (!context.coordinates) return;
+        if (!context.coordinates || !context.gameArea) {
+            Alert.alert("Select center point and create game area first");
+            return;
+        }
 
         const gameId = Math.floor(100000 + Math.random() * 900000);
 
@@ -59,19 +67,19 @@ function LocationSelect({navigation}) {
         }
 
         firestore()
-        .collection('Games')
-        .doc(gameId.toString())
-        .set(data)
-        .then(() => {
-            handleStart(gameId);
-        })
-        .catch((err) => {
-            Alert.alert(err)
-        });
+            .collection('Games')
+            .doc(gameId.toString())
+            .set(data)
+            .then(() => {
+                handleStart(gameId);
+            })
+            .catch((err) => {
+                Alert.alert(err)
+            });
     }
 
     function handleStart(gameId) {
-        navigation.navigate('Prepare', { gameId });
+        navigation.navigate('Prepare', {gameId});
     }
 
     function handleLongPress(event) {
@@ -91,18 +99,20 @@ function LocationSelect({navigation}) {
                 >
                     <GameAreaShape coordinates={context.gameArea}/>
                 </MapPreview>
+                <View style={styles.absolute}>
+                    <IconButton title="⊹" onPress={handleUseMyLocation}/>
+                </View>
             </View>
             <View style={styles.buttonsContainer}>
                 <View>
-                    <CustomButton title="Use my location" onPress={handleUseMyLocation}/>
                     <CustomButton title="Preview game area" onPress={handlePreviewGameArea}/>
                     <CustomButton title="Clear" onPress={handleClear} color={COLORS.ERROR}/>
                 </View>
                 <View>
-                    <CustomButton title="Start" onPress={postCurrentGame} color={COLORS.SUCCESS}/>
                     <View style={styles.bottomContainer}>
-                    <CoordinatesView coordinates={context.coordinates}/>
+                        <CoordinatesView coordinates={context.coordinates}/>
                     </View>
+                    <CustomButton title="Start" onPress={postCurrentGame} color={COLORS.SUCCESS}/>
                 </View>
             </View>
         </View>
@@ -112,6 +122,11 @@ function LocationSelect({navigation}) {
 export default LocationSelect;
 
 const styles = StyleSheet.create({
+    absolute: {
+        position: 'absolute',
+        bottom: 20,
+        right: 20,
+    },
     container: {
         flex: 1,
     },
@@ -120,13 +135,13 @@ const styles = StyleSheet.create({
     },
     bottomContainer: {
         alignItems: 'center',
-        marginBottom: 10,
-        marginTop: 10,
     },
     buttonsContainer: {
         flex: 2,
         justifyContent: 'space-between',
         paddingHorizontal: 40,
-        paddingVertical: 20,
+        paddingTop: 20,
+        paddingBottom: 40,
+        ...CARD_STYLE,
     }
 });

@@ -7,6 +7,7 @@ import {SettingsContext} from "../context/settingsContext";
 import GameAreaShape from "../components/GameAreaShape";
 import Timer from "../components/Timer";
 import GameIdView from "../components/GameIdView";
+import {CARD_STYLE, COLORS} from "../utils/constants";
 
 function Prepare({route, navigation}) {
     const context = useContext(SettingsContext);
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
         marginTop: 24,
     },
     map: {
-        flex: 3,
+        flex: 4,
     },
     details: {
         flex: 2,
@@ -72,5 +73,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingHorizontal: 40,
         paddingVertical: 20,
+        backgroundColor: COLORS.ACCENT,
+        ...CARD_STYLE
     }
 })

@@ -1,9 +1,9 @@
 import {View, StyleSheet, Alert, SafeAreaView} from "react-native";
+import {useContext, useState} from "react";
 
 import CustomInput from "../components/CustomInput";
-import {useContext, useState} from "react";
 import CustomButton from "../components/CustomButton";
-import {COLORS} from "../utils/constants";
+import {VIEW_STYLE} from "../utils/constants";
 import {SettingsContext} from "../context/settingsContext";
 import {createDateTime, validateStartTime} from "../utils/utils";
 
@@ -37,33 +37,34 @@ function CreateNewGame({navigation}) {
     }
 
     return (
-        <SafeAreaView>
-            <CustomInput
-                onChangeText={setRoundTime}
-                value={roundTime}
-                label="Round time"
-                placeholder="minutes"
-            />
+        <SafeAreaView style={styles.container}>
+            <View style={styles.innerContainer}>
+                <CustomInput
+                    onChangeText={setRoundTime}
+                    value={roundTime}
+                    label="Round time"
+                    placeholder="minutes"
+                />
 
-            <CustomInput
-                onChangeText={setDistance}
-                value={distance}
-                label="Distance"
-                placeholder="meters"
-            />
+                <CustomInput
+                    onChangeText={setDistance}
+                    value={distance}
+                    label="Distance"
+                    placeholder="meters"
+                />
 
-            <CustomInput
-                onChangeText={setStartTime}
-                value={startTime}
-                label="Start time"
-                placeholder="HH.MM / HH MM"
-            />
+                <CustomInput
+                    onChangeText={setStartTime}
+                    value={startTime}
+                    label="Start time"
+                    placeholder="HH.MM / HH MM"
+                />
+            </View>
 
             <View style={styles.buttonContainer}>
                 <CustomButton
                     title="Select location"
                     onPress={handleSelectLocation}
-                    color={COLORS.SUCCESS}
                 />
             </View>
         </SafeAreaView>
@@ -73,8 +74,18 @@ function CreateNewGame({navigation}) {
 export default CreateNewGame;
 
 const styles = StyleSheet.create({
+    container: {
+        ...VIEW_STYLE,
+        justifyContent: 'space-between',
+        flex: 1,
+    },
+    innerContainer: {
+//        backgroundColor: 'white',
+//        paddingHorizontal: 20,
+//        borderRadius: 20,
+//        elevation: 2,
+    },
     buttonContainer: {
-        alignItems: 'center',
         marginTop: 40,
     }
 })

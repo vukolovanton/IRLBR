@@ -20,15 +20,17 @@ export default CustomInput;
 
 const styles = StyleSheet.create({
     container: {
-        padding: 20,
+        paddingVertical: 20,
     },
     label: {
         marginBottom: 12,
         color: 'black',
+        fontFamily: 'Audiowide',
     },
     input: {
         height: 40,
         borderWidth: 1,
+        backgroundColor: 'white',
         borderRadius: COMMON_STYLES.BORDER_RADIUS,
     }
 })

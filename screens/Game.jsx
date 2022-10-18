@@ -1,4 +1,4 @@
-import {View, StyleSheet, SafeAreaView, Alert, Text} from "react-native";
+import {View, StyleSheet, SafeAreaView, Text} from "react-native";
 import MapboxGL from '@rnmapbox/maps';
 
 import MapPreview from "../components/MapPreview";
@@ -74,11 +74,11 @@ function Game({navigation}) {
                 <Text style={styles.title}>{currentRound} ROUND</Text>
 
                 {currentRound === ROUND.FIRST &&
-                    <Timer callback={timerCallback.bind(this, ROUND.SECOND)} time={rounds[0]}/>}
+                    <Timer callback={timerCallback.bind(this, ROUND.SECOND)} time={rounds[0]} light={true}/>}
                 {currentRound === ROUND.SECOND &&
-                    <Timer callback={timerCallback.bind(this, ROUND.THIRD)} time={rounds[1]}/>}
+                    <Timer callback={timerCallback.bind(this, ROUND.THIRD)} time={rounds[1]} light={true}/>}
                 {currentRound === ROUND.THIRD &&
-                    <Timer callback={timerCallback.bind(this, ROUND.END)} time={rounds[2]}/>}
+                    <Timer callback={timerCallback.bind(this, ROUND.END)} time={rounds[2]} light={true}/>}
 
                 <View style={styles.button}>
                     <CustomButton title="I'm dead" onPress={abortGame} color={COLORS.ERROR}/>
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     map: {
-        flex: 5,
+        flex: 8,
     },
     details: {
         flex: 2,
@@ -103,10 +103,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: 40,
         paddingVertical: 20,
         justifyContent: 'center',
+        backgroundColor: COLORS.MAIN,
     },
     title: {
-        fontWeight: 'bold',
-        color: 'black',
+        color: COLORS.LIGHT,
+        fontFamily: 'Audiowide',
     },
     button: {
         marginTop: 20,

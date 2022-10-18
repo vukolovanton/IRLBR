@@ -10,6 +10,7 @@ import Game from "./screens/Game";
 import Scoreboard from "./screens/Scoreboard";
 import Join from "./screens/Join";
 import {StatusBar} from "react-native";
+import {COLORS} from "./utils/constants";
 
 const Stack = createNativeStackNavigator();
 
@@ -19,7 +20,9 @@ const App = () => {
         <StatusBar style="light-content" />
             <SettingsContextProvider>
                 <NavigationContainer>
-                    <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Initial">
+                    <Stack.Navigator screenOptions={{headerShown: false, contentStyle: {
+                        backgroundColor: COLORS.BACKGROUND,
+                    }}} initialRouteName="Initial">
                         <Stack.Screen name="Initial" component={Initial}/>
                         <Stack.Screen name="Settings" component={Settings}/>
                         <Stack.Screen name="CreateNewGame" component={CreateNewGame}/>

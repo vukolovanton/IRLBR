@@ -18,9 +18,13 @@ function useRequestPermission() {
                     );
             if (!granted === PermissionsAndroid.RESULTS.GRANTED) {
                 Alert.alert('Fine location permission denied');
+                return false;
+            } else {
+                return true;
             }
         } catch (err) {
             console.warn(err, '<-- ERR REQUEST');
+            return false;
         }
     };
 

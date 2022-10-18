@@ -4,7 +4,7 @@ import {useContext, useState} from "react";
 
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
-import {COLORS} from "../utils/constants";
+import {VIEW_STYLE} from "../utils/constants";
 import {SettingsContext} from "../context/settingsContext";
 
 function Join({navigation}) {
@@ -15,13 +15,19 @@ function Join({navigation}) {
     const context = useContext(SettingsContext);
 
     function handleJoinGame() {
+        let gameIdString = gameId.toString();
+
         if (!gameId) return;
+
+        if (gameIdString.length === 7 && gameIdString.charAt(3) === '-') {
+            gameIdString = gameIdString.replace('-','');
+        }
 
         setIsLoading(true);
 
         firestore()
             .collection('Games')
-            .doc(gameId.toString())
+            .doc(gameIdString)
             .get()
             .then(documentSnapshot => {
                 if (!documentSnapshot.exists) {
@@ -63,7 +69,6 @@ function Join({navigation}) {
                     isLoading={isLoading}
                     title="Join"
                     onPress={handleJoinGame}
-                    color={COLORS.SUCCESS}
                 />
                 {isError && <Text>Can't find game with such ID</Text>}
             </View>
@@ -77,8 +82,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
+        ...VIEW_STYLE,
     },
-    buttonContainer: {
-        alignItems: 'center',
-    }
 })

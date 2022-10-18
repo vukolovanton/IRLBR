@@ -1,8 +1,8 @@
-import {TouchableOpacity, StyleSheet, Text, ActivityIndicator} from "react-native";
+import {TouchableOpacity, StyleSheet, Text} from "react-native";
 import {memo} from 'react';
 import {COLORS} from "../utils/constants";
 
-function CustomButton({title, onPress, color = COLORS.MAIN, isLoading = false}) {
+function IconButton({title, onPress, color = COLORS.MAIN}) {
 
     return (
         <TouchableOpacity
@@ -10,27 +10,22 @@ function CustomButton({title, onPress, color = COLORS.MAIN, isLoading = false}) 
             style={styles(color).button}
         >
             <Text style={styles().title}>{title.toUpperCase()}</Text>
-            {isLoading && <ActivityIndicator style={styles().loading} color="white" />}
         </TouchableOpacity>
     )
 }
 
-export default memo(CustomButton);
+export default memo(IconButton);
 
 const styles = (color) => StyleSheet.create({
     button: {
-        alignItems: "center",
-        flexDirection: 'row',
-        justifyContent: 'center',
         backgroundColor: color,
-        padding: 15,
-        marginTop: 5,
-        marginBottom: 5,
+        paddingHorizontal: 10,
         borderRadius: 20,
     },
     title: {
         color: '#FFF',
         fontWeight: 'bold',
+        fontSize: 28,
     },
     loading: {
         marginLeft: 10,

@@ -1,5 +1,6 @@
 import {View, StyleSheet, Text, SafeAreaView} from "react-native";
 import CustomButton from "../components/CustomButton";
+import {VIEW_STYLE} from "../utils/constants";
 
 function Initial({navigation}) {
     return (
@@ -25,13 +26,12 @@ const styles = StyleSheet.create({
         fontSize: 48,
         fontFamily: 'Audiowide',
         color: 'black',
+        alignSelf: 'center',
     },
     container: {
         flex: 1,
         justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingTop: 80,
-        paddingBottom: 80,
+        ...VIEW_STYLE,
     },
     innerContainer: {
         justifyContent: 'center',

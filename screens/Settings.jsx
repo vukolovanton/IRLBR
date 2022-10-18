@@ -1,40 +1,47 @@
 import {
+  Alert,
   StyleSheet,
   View,
-  Text,
-  Button,
 } from 'react-native';
 import useRequestPermission from "../hooks/useRequestPermission";
+import CustomButton from "../components/CustomButton";
 
 function Settings() {
-  const requestFineLocationPermission = useRequestPermission();
+    const requestFineLocationPermission = useRequestPermission();
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Game Settings</Text>
-      <View style={styles.additional}>
-        <Text style={styles.header}>Additional settings</Text>
-        <Button
-          title="Check permission"
-          onPress={requestFineLocationPermission}
-        />
-      </View>
-    </View>
-  );
+    function handleAskLocationPermission() {
+        const granted = requestFineLocationPermission();
+        if (granted) {
+            Alert.alert('Fine location permission granted');
+        } else {
+            Alert.alert('Fine location permission denied');
+        }
+    }
+
+    return (
+        <View style={styles.container}>
+            <View style={styles.additional}>
+                <CustomButton
+                    title="Check location permission"
+                    onPress={handleAskLocationPermission}
+                />
+            </View>
+        </View>
+    );
 }
 
 export default Settings;
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-  },
-  additional: {
-    marginTop: 20,
-  },
-  header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: 'black',
-  },
+    container: {
+        padding: 20,
+    },
+    additional: {
+        marginTop: 20,
+    },
+    header: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: 'black',
+    },
 });
