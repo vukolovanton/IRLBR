@@ -1,11 +1,16 @@
 import {StyleSheet, Text, SafeAreaView} from "react-native";
+import {useContext} from "react";
+
 import CustomButton from "../components/CustomButton";
+import {SettingsContext} from "../context/settingsContext";
 
 function Scoreboard({navigation, route}) {
     const {failed} = route.params;
-
+    const context = useContext(SettingsContext);
+    
     function handleMainMenuPress() {
         navigation.navigate("Initial");
+        context.handleChangeCoordinates(null);
     }
 
     return (

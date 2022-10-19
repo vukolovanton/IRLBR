@@ -31,14 +31,16 @@ function Game({navigation}) {
         setCurrentRound(roundEnum);
 
         if (roundEnum === ROUND.END) {
-            navigation.navigate('Scoreboard');
+            navigation.navigate('Scoreboard', {
+                failed: false,
+            });
         } else {
             const isInGameArea = context.checkIfPlayerIsInGameArea(playerCoordinates);
             if (!isInGameArea) {
                 abortGame();
                 return;
             }
-            context.shrinkGameArea();
+            context.offsetGameArea();
         }
     }
 

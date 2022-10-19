@@ -36,3 +36,9 @@ export function trimCoordinates(coordinates) {
     const lon = Number(coordinates[1].toString().slice(0, -8));
     return [lat, lon];
 }
+
+export function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}

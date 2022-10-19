@@ -2,7 +2,7 @@ import {createContext, useState} from 'react';
 import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
 import {point, polygon} from '@turf/helpers';
 import {getCoordinatesForPointFromGivenDistance} from '../utils';
-import {trimCoordinates} from "../utils/utils";
+import {getRandomInt, trimCoordinates} from "../utils/utils";
 
 export const SettingsContext = createContext({
     coordinates: [],
@@ -16,8 +16,10 @@ export const SettingsContext = createContext({
     },
     checkIfPlayerIsInGameArea: (playerCoordinates) => {
     },
-    setNewGameDetails: ({newRoundTime, newDistance, newStartTime}) => {},
-    shrinkGameArea: () => {},
+    setNewGameDetails: ({newRoundTime, newDistance, newStartTime}) => {
+    },
+    offsetGameArea: () => {
+    },
 });
 
 function SettingsContextProvider({children}) {
@@ -77,10 +79,18 @@ function SettingsContextProvider({children}) {
         }
     }
 
-    function shrinkGameArea() {
+    function shrinkGameArea(newCoordinates = coordinates) {
         const newDistance = Math.round(distance / 2);
         setDistance(newDistance);
-        createGameArea(newDistance, coordinates)
+        createGameArea(newDistance, newCoordinates);
+    }
+
+    function offsetGameArea() {
+        const angle = getRandomInt(-360, 360);
+        const newCoordinates = getCoordinatesForPointFromGivenDistance(coordinates, Math.round(distance / 2), angle);
+        setCoordinates(newCoordinates);
+
+        shrinkGameArea(newCoordinates);
     }
 
     const value = {
@@ -93,7 +103,7 @@ function SettingsContextProvider({children}) {
         createGameArea,
         checkIfPlayerIsInGameArea,
         setNewGameDetails,
-        shrinkGameArea,
+        offsetGameArea,
     }
 
     return (

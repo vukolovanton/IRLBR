@@ -2,6 +2,7 @@ import {View, StyleSheet, Alert} from "react-native";
 import {useContext, useEffect, useState} from "react";
 import Geolocation from 'react-native-geolocation-service';
 import firestore from '@react-native-firebase/firestore';
+import MapboxGL from '@rnmapbox/maps';
 
 import MapPreview from "../components/MapPreview";
 import GameAreaShape from "../components/GameAreaShape";
@@ -51,7 +52,6 @@ function LocationSelect({navigation}) {
     }
 
     function postCurrentGame() {
-
         if (!context.coordinates || !context.gameArea) {
             Alert.alert("Select center point and create game area first");
             return;
@@ -101,6 +101,7 @@ function LocationSelect({navigation}) {
                     onLongPress={handleLongPress}
                     centerCoordinate={context.coordinates}
                 >
+                    <MapboxGL.UserLocation/>
                     <GameAreaShape coordinates={context.gameArea}/>
                 </MapPreview>
                 <View style={styles.absolute}>
