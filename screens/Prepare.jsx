@@ -22,7 +22,7 @@ function Prepare({route, navigation}) {
 
     useEffect(() => {
         if (!context.gameArea) {
-            context.createGameArea(context.distance);
+            context.createGameArea(context.distance, context.coordinates);
         }
     }, []);
 

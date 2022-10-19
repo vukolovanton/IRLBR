@@ -1,5 +1,5 @@
 import {View, StyleSheet, Alert} from "react-native";
-import {useContext, useEffect} from "react";
+import {useContext, useEffect, useState} from "react";
 import Geolocation from 'react-native-geolocation-service';
 import firestore from '@react-native-firebase/firestore';
 
@@ -15,6 +15,7 @@ import IconButton from "../components/IconButton";
 function LocationSelect({navigation}) {
     const context = useContext(SettingsContext);
     const requestFineLocationPermission = useRequestPermission();
+    const [loading, setIsLoading] = useState(false);
 
     useEffect(() => {
         requestFineLocationPermission();
@@ -42,7 +43,7 @@ function LocationSelect({navigation}) {
             Alert.alert('Select center point first');
             return;
         }
-        context.createGameArea(context.distance);
+        context.createGameArea(context.distance, context.coordinates);
     }
 
     function handleClear() {
@@ -50,10 +51,12 @@ function LocationSelect({navigation}) {
     }
 
     function postCurrentGame() {
+
         if (!context.coordinates || !context.gameArea) {
             Alert.alert("Select center point and create game area first");
             return;
         }
+        setIsLoading(true);
 
         const gameId = Math.floor(100000 + Math.random() * 900000);
 
@@ -63,7 +66,6 @@ function LocationSelect({navigation}) {
             roundTime: context.roundTime,
             distance: context.distance,
             coordinates: context.coordinates,
-            gameAreaCoordinates: JSON.stringify(context.gameArea.geometry.coordinates[0]),
         }
 
         firestore()
@@ -71,9 +73,11 @@ function LocationSelect({navigation}) {
             .doc(gameId.toString())
             .set(data)
             .then(() => {
+                setIsLoading(false)
                 handleStart(gameId);
             })
             .catch((err) => {
+                setIsLoading(false);
                 Alert.alert(err)
             });
     }
@@ -86,7 +90,7 @@ function LocationSelect({navigation}) {
         const {coordinates} = event.geometry;
         if (coordinates.length === 2) {
             context.handleChangeCoordinates(coordinates, true);
-            context.createGameArea(context.distance, {clear: true});
+            context.createGameArea(context.distance, context.coordinates, {clear: true});
         }
     }
 
@@ -112,7 +116,7 @@ function LocationSelect({navigation}) {
                     <View style={styles.bottomContainer}>
                         <CoordinatesView coordinates={context.coordinates}/>
                     </View>
-                    <CustomButton title="Start" onPress={postCurrentGame} color={COLORS.SUCCESS}/>
+                    <CustomButton isLoading={loading} title="Start" onPress={postCurrentGame} color={COLORS.SUCCESS}/>
                 </View>
             </View>
         </View>

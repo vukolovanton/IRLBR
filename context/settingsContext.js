@@ -12,7 +12,7 @@ export const SettingsContext = createContext({
     distance: '',
     startTime: '',
     roundTime: '',
-    createGameArea: () => {
+    createGameArea: (width, coordinates, options) => {
     },
     checkIfPlayerIsInGameArea: (playerCoordinates) => {
     },
@@ -33,14 +33,14 @@ function SettingsContextProvider({children}) {
         setStartTime(newStartTime);
     }
 
-    function createGameArea(width, options) {
+    function createGameArea(width, targetCoordinates, options) {
         if (options?.clear) {
             setGameArea(null);
             return;
         }
 
-        if (!coordinates || coordinates.length === 0) return;
-        const temp1 = getCoordinatesForPointFromGivenDistance(coordinates, Math.round(width / 2), 0);
+        if (!targetCoordinates || targetCoordinates.length === 0) return;
+        const temp1 = getCoordinatesForPointFromGivenDistance(targetCoordinates, Math.round(width / 2), 0);
         const initialCoordinate = getCoordinatesForPointFromGivenDistance(temp1, Math.round(width / 2), -90);
         const toTheRight = getCoordinatesForPointFromGivenDistance(initialCoordinate, width, 90);
         const toTheBottom = getCoordinatesForPointFromGivenDistance(toTheRight, width, -180);
@@ -80,7 +80,7 @@ function SettingsContextProvider({children}) {
     function shrinkGameArea() {
         const newDistance = Math.round(distance / 2);
         setDistance(newDistance);
-        createGameArea(newDistance)
+        createGameArea(newDistance, coordinates)
     }
 
     const value = {
