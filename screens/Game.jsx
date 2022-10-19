@@ -11,11 +11,17 @@ import CustomButton from "../components/CustomButton";
 import {COLORS} from "../utils/constants";
 import CustomUserLocation from "../components/CustomUserLocation";
 
-const ROUND = {
+export const ROUND = {
     FIRST: 'FIRST',
     SECOND: 'SECOND',
     THIRD: 'THIRD',
     END: 'END',
+}
+
+export const ROUND_INDEX = {
+    [ROUND.FIRST]: 0,
+    [ROUND.SECOND]: 1,
+    [ROUND.THIRD]: 2,
 }
 
 function Game({navigation}) {
@@ -40,7 +46,8 @@ function Game({navigation}) {
                 abortGame();
                 return;
             }
-            context.offsetGameArea();
+
+            context.offsetGameArea(ROUND_INDEX[roundEnum]);
         }
     }
 

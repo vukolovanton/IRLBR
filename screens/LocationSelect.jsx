@@ -12,6 +12,8 @@ import {SettingsContext} from "../context/settingsContext";
 import useRequestPermission from "../hooks/useRequestPermission";
 import CoordinatesView from "../components/CoordinatesView";
 import IconButton from "../components/IconButton";
+import {getRandomInt} from "../utils/utils";
+import {getCoordinatesForPointFromGivenDistance} from "../utils";
 
 function LocationSelect({navigation}) {
     const context = useContext(SettingsContext);
@@ -51,12 +53,34 @@ function LocationSelect({navigation}) {
         context.handleChangeCoordinates(null);
     }
 
+    function generateGameCoordinateOffset() {
+        const data = [];
+        let distance = context.distance;
+        for (let i = 0; i < 3; i++) {
+            const angle = getRandomInt(-360, 360);
+            const coordinates = getCoordinatesForPointFromGivenDistance(context.coordinates, distance, angle);
+            if (i !== 0) {
+                distance = Math.round(distance / 2);
+            }
+            data.push({
+                coordinates,
+                distance
+            });
+        }
+
+        return data;
+    }
+
     function postCurrentGame() {
         if (!context.coordinates || !context.gameArea) {
             Alert.alert("Select center point and create game area first");
             return;
         }
+
         setIsLoading(true);
+
+        const offsetData = generateGameCoordinateOffset();
+        context.setOffsetData(offsetData);
 
         const gameId = Math.floor(100000 + Math.random() * 900000);
 
@@ -66,6 +90,7 @@ function LocationSelect({navigation}) {
             roundTime: context.roundTime,
             distance: context.distance,
             coordinates: context.coordinates,
+            offsetData,
         }
 
         firestore()

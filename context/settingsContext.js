@@ -2,7 +2,7 @@ import {createContext, useState} from 'react';
 import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
 import {point, polygon} from '@turf/helpers';
 import {getCoordinatesForPointFromGivenDistance} from '../utils';
-import {getRandomInt, trimCoordinates} from "../utils/utils";
+import {trimCoordinates} from "../utils/utils";
 
 export const SettingsContext = createContext({
     coordinates: [],
@@ -20,6 +20,9 @@ export const SettingsContext = createContext({
     },
     offsetGameArea: () => {
     },
+    offsetData: [],
+    setOffsetData: () => {
+    },
 });
 
 function SettingsContextProvider({children}) {
@@ -28,6 +31,7 @@ function SettingsContextProvider({children}) {
     const [roundTime, setRoundTime] = useState(null);
     const [distance, setDistance] = useState(null);
     const [startTime, setStartTime] = useState(null);
+    const [offsetData, setOffsetData] = useState(null);
 
     function setNewGameDetails({newRoundTime, newDistance, newStartTime}) {
         setRoundTime(newRoundTime);
@@ -79,18 +83,10 @@ function SettingsContextProvider({children}) {
         }
     }
 
-    function shrinkGameArea(newCoordinates = coordinates) {
-        const newDistance = Math.round(distance / 2);
-        setDistance(newDistance);
-        createGameArea(newDistance, newCoordinates);
-    }
-
-    function offsetGameArea() {
-        const angle = getRandomInt(-360, 360);
-        const newCoordinates = getCoordinatesForPointFromGivenDistance(coordinates, Math.round(distance / 2), angle);
-        setCoordinates(newCoordinates);
-
-        shrinkGameArea(newCoordinates);
+    function offsetGameArea(index) {
+        setDistance(offsetData[index].distance);
+        setCoordinates(offsetData[index].coordinates);
+        createGameArea(offsetData[index].distance, offsetData[index].coordinates);
     }
 
     const value = {
@@ -104,6 +100,8 @@ function SettingsContextProvider({children}) {
         checkIfPlayerIsInGameArea,
         setNewGameDetails,
         offsetGameArea,
+        offsetData,
+        setOffsetData,
     }
 
     return (

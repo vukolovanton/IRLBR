@@ -43,6 +43,7 @@ function Join({navigation}) {
                 });
 
                 context.handleChangeCoordinates(data.coordinates);
+                context.setOffsetData(data.offsetData);
 
                 setIsLoading(false);
                 setGameId('');
