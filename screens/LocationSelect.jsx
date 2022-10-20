@@ -135,7 +135,7 @@ function LocationSelect({navigation}) {
             </View>
             <View style={styles.buttonsContainer}>
                 <View>
-                    <CustomButton title="Preview game area" onPress={handlePreviewGameArea}/>
+                    <CustomButton title="Create game area" onPress={handlePreviewGameArea}/>
                     <CustomButton title="Clear" onPress={handleClear} color={COLORS.ERROR}/>
                 </View>
                 <View>
