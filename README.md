@@ -1,5 +1,7 @@
 # IRLBR
 ## Airsoft app companion: make your own IRL Battle Royale game.
+![130972619-1f4311ba-e9b2-4a47-b09a-7c1c26ee9211](https://user-images.githubusercontent.com/53794193/196923370-e11071af-5116-4b4a-9a5b-b3f01609bd17.jpg)
+
 
 ### How to use:
 1. Install the app - check out **releases** folder.
