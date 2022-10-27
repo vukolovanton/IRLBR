@@ -1,4 +1,4 @@
-import {View, StyleSheet, SafeAreaView, Text} from "react-native";
+import {View, StyleSheet, SafeAreaView, Text, Alert} from "react-native";
 import firestore from '@react-native-firebase/firestore';
 import {useContext, useState} from "react";
 
@@ -6,6 +6,7 @@ import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import {VIEW_STYLE} from "../utils/constants";
 import {SettingsContext} from "../context/settingsContext";
+import {validateStartTime} from "../utils/utils";
 
 function Join({navigation}) {
     const [gameId, setGameId] = useState(null);
@@ -36,6 +37,15 @@ function Join({navigation}) {
                 }
 
                 const data = documentSnapshot.data();
+
+                const isDateValid = validateStartTime(JSON.parse(data.startTime));
+                if (!isDateValid) {
+                    Alert.alert("Error!", "This game already expired.");
+                    setIsLoading(false);
+                    setGameId('');
+                    return;
+                }
+
                 context.setNewGameDetails({
                     newDistance: Number(data.distance),
                     newStartTime: JSON.parse(data.startTime),

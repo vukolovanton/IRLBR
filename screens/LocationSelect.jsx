@@ -32,7 +32,7 @@ function LocationSelect({navigation}) {
             if (granted) {
                 handleUseMyLocation();
             } else {
-                Alert.alert('Fine location permission denied. Please check out the settings menu');
+                Alert.alert('Permission denied', 'Fine location permission denied. Please check out the settings menu');
             }
         }
 

@@ -1,4 +1,4 @@
-import {View, StyleSheet, SafeAreaView, Text} from "react-native";
+import {View, StyleSheet, SafeAreaView, Text, Alert} from "react-native";
 import {useContext, useEffect} from "react";
 import MapboxGL from '@rnmapbox/maps';
 
@@ -8,9 +8,11 @@ import GameAreaShape from "../components/GameAreaShape";
 import Timer from "../components/Timer";
 import GameIdView from "../components/GameIdView";
 import {CARD_STYLE, COLORS} from "../utils/constants";
+import useRequestPermission from "../hooks/useRequestPermission";
 
 function Prepare({route, navigation}) {
     const context = useContext(SettingsContext);
+    const requestFineLocationPermission = useRequestPermission();
     const {gameId} = route.params;
 
     function handleLongPress() {
@@ -19,6 +21,17 @@ function Prepare({route, navigation}) {
     function navigateToGameScreen() {
         navigation.navigate('Game');
     }
+
+    useEffect(() => {
+        async function askPermissions() {
+            const granted = await requestFineLocationPermission();
+            if (!granted) {
+                Alert.alert('Permission denied', 'Fine location permission denied. Please check out the settings menu');
+            }
+        }
+
+        askPermissions();
+    }, []);
 
     useEffect(() => {
         if (!context.gameArea) {
