@@ -6,7 +6,7 @@ import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import {VIEW_STYLE} from "../utils/constants";
 import {SettingsContext} from "../context/settingsContext";
-import {validateStartTime} from "../utils/utils";
+import {createDateTime, validateStartTime} from "../utils/utils";
 
 function Join({navigation}) {
     const [gameId, setGameId] = useState(null);
@@ -38,8 +38,7 @@ function Join({navigation}) {
 
                 const data = documentSnapshot.data();
 
-                const isDateValid = validateStartTime(JSON.parse(data.startTime));
-                if (!isDateValid) {
+                if (new Date(JSON.parse(data.startTime)) < Date.now()) {
                     Alert.alert("Error!", "This game already expired.");
                     setIsLoading(false);
                     setGameId('');
