@@ -129,7 +129,7 @@ function LocationSelect({navigation}) {
             });
     }
 
-    function temp() {
+    function debug() {
         context.offsetGameArea(0);
 //
 //        setTimeout(() => {
@@ -184,7 +184,6 @@ function LocationSelect({navigation}) {
                     <View style={styles.bottomContainer}>
                         <CoordinatesView coordinates={context.coordinates}/>
                     </View>
-                    <CustomButton onPress={temp} title={"Temp"}/>
                     <CustomButton isLoading={loading} title="Start" onPress={postCurrentGame} color={COLORS.SUCCESS}/>
                 </View>
             </View>
