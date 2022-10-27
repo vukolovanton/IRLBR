@@ -21,7 +21,7 @@ function LocationSelect({navigation}) {
     const [loading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        async function temp() {
+        async function askPermissions() {
             const granted = await requestFineLocationPermission();
             if (granted) {
                 handleUseMyLocation();
@@ -29,7 +29,7 @@ function LocationSelect({navigation}) {
                 Alert.alert('Fine location permission denied. Please check out the settings menu');
             }
         }
-        temp();
+        askPermissions();
     }, []);
 
     function handleUseMyLocation() {
