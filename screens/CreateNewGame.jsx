@@ -12,6 +12,11 @@ function CreateNewGame({navigation}) {
     const [distance, setDistance] = useState('');
     const [startTime, setStartTime] = useState('');
 
+    function handleChangeStartTime(value) {
+        if (value.length > 5) return;
+        setStartTime(value);
+    }
+
     const context = useContext(SettingsContext);
 
     function handleSelectLocation() {
@@ -54,7 +59,7 @@ function CreateNewGame({navigation}) {
                 />
 
                 <CustomInput
-                    onChangeText={setStartTime}
+                    onChangeText={handleChangeStartTime}
                     value={startTime}
                     label="Start time"
                     placeholder="HH.MM / HH MM"

@@ -1,7 +1,7 @@
 import {View, Text, StyleSheet, TextInput} from "react-native";
 import {COMMON_STYLES} from "../utils/constants";
 
-function CustomInput({ label, onChangeText, value, placeholder = '', keyboardType = 'numeric' }) {
+function CustomInput({ label, onChangeText, value, placeholder = '', keyboardType = 'number-pad' }) {
     return (
         <View style={styles.container}>
             <Text style={styles.label}>{label}</Text>
@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Audiowide',
     },
     input: {
+        color: 'black',
         height: 40,
         borderWidth: 1,
         backgroundColor: 'white',
