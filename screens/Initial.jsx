@@ -1,14 +1,21 @@
 import {View, StyleSheet, Text, SafeAreaView} from "react-native";
 import CustomButton from "../components/CustomButton";
 import {VIEW_STYLE} from "../utils/constants";
+import {useContext} from "react";
+import {SettingsContext} from "../context/settingsContext";
 
 function Initial({navigation}) {
+    const context = useContext(SettingsContext);
+
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.logo}>IRLBR</Text>
             <View style={styles.innerContainer}>
                 <CustomButton
-                    title='Create new game' onPress={() => navigation.navigate('CreateNewGame')}
+                    title='Create new game' onPress={() => {
+                        context.clearAllData();
+                        navigation.navigate('CreateNewGame')
+                    }}
                 />
                 <CustomButton title='Join' onPress={() => navigation.navigate('Join')}/>
             </View>
