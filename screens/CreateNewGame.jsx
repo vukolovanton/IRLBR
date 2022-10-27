@@ -1,4 +1,4 @@
-import {View, StyleSheet, Alert, SafeAreaView} from "react-native";
+import {View, StyleSheet, Alert, SafeAreaView, KeyboardAvoidingView} from "react-native";
 import {useContext, useState} from "react";
 
 import CustomInput from "../components/CustomInput";
@@ -47,31 +47,33 @@ function CreateNewGame({navigation}) {
                 <CustomInput
                     onChangeText={setRoundTime}
                     value={roundTime}
-                    label="Round time"
+                    label="Round time (minutes)"
                     placeholder="minutes"
                 />
 
                 <CustomInput
                     onChangeText={setDistance}
                     value={distance}
-                    label="Distance"
+                    label="Distance (meters)"
                     placeholder="meters"
                 />
 
                 <CustomInput
                     onChangeText={handleChangeStartTime}
                     value={startTime}
-                    label="Start time"
+                    label="Start time (HH MM)"
                     placeholder="HH.MM / HH MM"
                 />
             </View>
 
-            <View style={styles.buttonContainer}>
-                <CustomButton
-                    title="Select location"
-                    onPress={handleSelectLocation}
-                />
-            </View>
+            <KeyboardAvoidingView>
+                <View style={styles.buttonContainer}>
+                    <CustomButton
+                        title="Select location"
+                        onPress={handleSelectLocation}
+                    />
+                </View>
+            </KeyboardAvoidingView>
         </SafeAreaView>
     )
 }
