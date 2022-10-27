@@ -76,6 +76,21 @@ function Game({navigation}) {
                         playerCoordinates={playerCoordinates}
                         setPlayerCoordinates={setPlayerCoordinates}
                     />
+                    {
+                        context.originalGameArea &&
+                        <MapboxGL.ShapeSource shape={context.originalGameArea} id="pick">
+                            <MapboxGL.FillLayer id="dick" style={{
+                                fillColor: '#ed5e42',
+                                fillOpacity: 0.5
+                            }}/>
+                            <MapboxGL.LineLayer
+                                id="rick"
+                                style={{
+                                    lineColor: "transparent", lineWidth: 0
+                                }}
+                            />
+                        </MapboxGL.ShapeSource>
+                    }
                     <GameAreaShape coordinates={context.gameArea}/>
                 </MapPreview>
             </View>

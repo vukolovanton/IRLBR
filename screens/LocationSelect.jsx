@@ -55,7 +55,7 @@ function LocationSelect({navigation}) {
             Alert.alert('Select center point first');
             return;
         }
-        context.createGameArea(context.distance, context.coordinates);
+        context.createGameArea(context.distance, context.coordinates, {setOriginalGameArea: true});
     }
 
     function handleClear() {
@@ -65,13 +65,20 @@ function LocationSelect({navigation}) {
     function generateGameCoordinateOffset() {
         const data = [];
         let distance = context.distance;
+        let width = context.distance;
         for (let i = 0; i < 3; i++) {
             const angle = getRandomInt(-360, 360);
+            if (i === 0) {
+                distance = Math.round(distance / 4);
+            } else {
+                distance = Math.round(distance / 2);
+            }
+            width = width / 2;
             const coordinates = getCoordinatesForPointFromGivenDistance(context.coordinates, distance, angle);
-            distance = Math.round(distance / 2);
             data.push({
                 coordinates,
-                distance
+                distance,
+                width,
             });
         }
         return data;
@@ -113,6 +120,18 @@ function LocationSelect({navigation}) {
             });
     }
 
+    function temp() {
+        context.offsetGameArea(0);
+
+        setTimeout(() => {
+            context.offsetGameArea(1);
+        }, 2000)
+
+        setTimeout(() => {
+            context.offsetGameArea(2);
+        }, 4000)
+    }
+
     function handleStart(gameId) {
         navigation.navigate('Prepare', {gameId});
     }
@@ -133,7 +152,23 @@ function LocationSelect({navigation}) {
                     centerCoordinate={context.coordinates}
                 >
                     <MapboxGL.UserLocation/>
+                    {
+                        context.originalGameArea &&
+                        <MapboxGL.ShapeSource shape={context.originalGameArea} id="pick">
+                            <MapboxGL.FillLayer id="dick" style={{
+                                fillColor: '#ed5e42',
+                                fillOpacity: 0.5
+                            }}/>
+                            <MapboxGL.LineLayer
+                                id="rick"
+                                style={{
+                                    lineColor: "transparent", lineWidth: 0
+                                }}
+                            />
+                        </MapboxGL.ShapeSource>
+                    }
                     <GameAreaShape coordinates={context.gameArea}/>
+
                 </MapPreview>
                 <View style={styles.absolute}>
                     <IconButton title="⊹" onPress={handleUseMyLocation}/>
@@ -148,6 +183,7 @@ function LocationSelect({navigation}) {
                     <View style={styles.bottomContainer}>
                         <CoordinatesView coordinates={context.coordinates}/>
                     </View>
+                    <CustomButton onPress={temp} title={"Temp"}/>
                     <CustomButton isLoading={loading} title="Start" onPress={postCurrentGame} color={COLORS.SUCCESS}/>
                 </View>
             </View>

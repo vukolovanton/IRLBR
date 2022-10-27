@@ -9,6 +9,7 @@ export const SettingsContext = createContext({
     handleChangeCoordinates: () => {
     },
     gameArea: {},
+    originalGameArea: {},
     distance: '',
     startTime: '',
     roundTime: '',
@@ -28,6 +29,7 @@ export const SettingsContext = createContext({
 function SettingsContextProvider({children}) {
     const [coordinates, setCoordinates] = useState(null);
     const [gameArea, setGameArea] = useState(null);
+    const [originalGameArea, setOriginalGameArea] = useState(null);
     const [roundTime, setRoundTime] = useState(null);
     const [distance, setDistance] = useState(null);
     const [startTime, setStartTime] = useState(null);
@@ -66,7 +68,25 @@ function SettingsContextProvider({children}) {
                     ]
                 ]
             }
-        })
+        });
+
+        if (options?.setOriginalGameArea) {
+            setOriginalGameArea({
+                type: "Feature",
+                geometry: {
+                    type: "Polygon",
+                    coordinates: [
+                        [
+                            initialCoordinate,
+                            toTheRight,
+                            toTheBottom,
+                            toTheLeft,
+                            initialCoordinate
+                        ]
+                    ]
+                }
+            });
+        }
     }
 
     function checkIfPlayerIsInGameArea(playerCoordinates) {
@@ -86,13 +106,14 @@ function SettingsContextProvider({children}) {
     function offsetGameArea(index) {
         setDistance(offsetData[index].distance);
         setCoordinates(offsetData[index].coordinates);
-        createGameArea(offsetData[index].distance, offsetData[index].coordinates);
+        createGameArea(offsetData[index].width, offsetData[index].coordinates);
     }
 
     const value = {
         coordinates,
         handleChangeCoordinates,
         gameArea,
+        originalGameArea,
         distance,
         startTime,
         roundTime,

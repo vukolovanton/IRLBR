@@ -1,7 +1,11 @@
 import MapboxGL from '@rnmapbox/maps';
 import {StyleSheet} from "react-native";
 
-function GameAreaShape({coordinates, color = "lightblue"}) {
+function GameAreaShape({coordinates, color = "lightblue", ids = {
+    source: 'source',
+    fill: 'fill',
+    line: 'line'
+}}) {
     if (!coordinates) return null;
     return (
         <MapboxGL.ShapeSource id="source" shape={coordinates}>
