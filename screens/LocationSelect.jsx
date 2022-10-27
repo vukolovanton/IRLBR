@@ -29,6 +29,7 @@ function LocationSelect({navigation}) {
                 Alert.alert('Fine location permission denied. Please check out the settings menu');
             }
         }
+
         askPermissions();
     }, []);
 
@@ -67,15 +68,12 @@ function LocationSelect({navigation}) {
         for (let i = 0; i < 3; i++) {
             const angle = getRandomInt(-360, 360);
             const coordinates = getCoordinatesForPointFromGivenDistance(context.coordinates, distance, angle);
-            if (i !== 0) {
-                distance = Math.round(distance / 2);
-            }
+            distance = Math.round(distance / 2);
             data.push({
                 coordinates,
                 distance
             });
         }
-
         return data;
     }
 

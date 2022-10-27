@@ -1,13 +1,14 @@
 import MapboxGL from '@rnmapbox/maps';
+import {StyleSheet} from "react-native";
 
-function GameAreaShape({coordinates}) {
+function GameAreaShape({coordinates, color = "lightblue"}) {
     if (!coordinates) return null;
     return (
         <MapboxGL.ShapeSource id="source" shape={coordinates}>
-            <MapboxGL.FillLayer id="fill" style={styles.fillLayer}/>
+            <MapboxGL.FillLayer id="fill" style={styles(color).fillLayer}/>
             <MapboxGL.LineLayer
                 id="line"
-                style={{lineColor: "black", lineWidth: 2}}
+                style={styles(color).line}
             />
         </MapboxGL.ShapeSource>
     )
@@ -15,9 +16,10 @@ function GameAreaShape({coordinates}) {
 
 export default GameAreaShape;
 
-const styles = {
+const styles = (color) => StyleSheet.create({
     fillLayer: {
-        fillColor: "lightblue",
+        fillColor: color,
         fillOpacity: 0.5
-    }
-}
+    },
+    line: {lineColor: "black", lineWidth: 2}
+})
