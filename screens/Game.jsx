@@ -46,8 +46,7 @@ function Game({navigation}) {
                 abortGame();
                 return;
             }
-
-            context.offsetGameArea(ROUND_INDEX[roundEnum]);
+            context.offsetGameArea(ROUND_INDEX[roundEnum] - 1);
         }
     }
 

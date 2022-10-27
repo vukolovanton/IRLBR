@@ -72,6 +72,7 @@ function LocationSelect({navigation}) {
         const data = [];
         let distance = context.distance;
         let width = context.distance;
+        let newCoordinates = context.coordinates;
         for (let i = 0; i < 3; i++) {
             const angle = getRandomInt(-360, 360);
             if (i === 0) {
@@ -80,13 +81,15 @@ function LocationSelect({navigation}) {
                 distance = Math.round(distance / 2);
             }
             width = width / 2;
-            const coordinates = getCoordinatesForPointFromGivenDistance(context.coordinates, distance, angle);
+            const coordinates = getCoordinatesForPointFromGivenDistance(newCoordinates, distance, angle);
+            newCoordinates = coordinates;
             data.push({
                 coordinates,
                 distance,
                 width,
             });
         }
+        console.log(data)
         return data;
     }
 
@@ -112,23 +115,23 @@ function LocationSelect({navigation}) {
             offsetData,
         }
 
-//        firestore()
-//            .collection('Games')
-//            .doc(gameId.toString())
-//            .set(data)
-//            .then(() => {
-//                setIsLoading(false)
-//                handleStart(gameId);
-//            })
-//            .catch((err) => {
-//                setIsLoading(false);
-//                Alert.alert(err)
-//            });
+        firestore()
+            .collection('Games')
+            .doc(gameId.toString())
+            .set(data)
+            .then(() => {
+                setIsLoading(false)
+                handleStart(gameId);
+            })
+            .catch((err) => {
+                setIsLoading(false);
+                Alert.alert(err)
+            });
     }
 
     function temp() {
         context.offsetGameArea(0);
-
+//
 //        setTimeout(() => {
 //            context.offsetGameArea(1);
 //        }, 2000)
