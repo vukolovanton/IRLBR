@@ -11,6 +11,7 @@ function Scoreboard({navigation, route}) {
     function handleMainMenuPress() {
         navigation.navigate("Initial");
         context.handleChangeCoordinates(null);
+        context.clearAllData();
     }
 
     return (

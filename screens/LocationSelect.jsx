@@ -15,6 +15,12 @@ import IconButton from "../components/IconButton";
 import {getRandomInt} from "../utils/utils";
 import {getCoordinatesForPointFromGivenDistance} from "../utils";
 
+const ids = {
+    source: 'initialArea',
+    fill: 'initialAreaFill',
+    line: 'initialAreaLine'
+}
+
 function LocationSelect({navigation}) {
     const context = useContext(SettingsContext);
     const requestFineLocationPermission = useRequestPermission();
@@ -106,30 +112,30 @@ function LocationSelect({navigation}) {
             offsetData,
         }
 
-        firestore()
-            .collection('Games')
-            .doc(gameId.toString())
-            .set(data)
-            .then(() => {
-                setIsLoading(false)
-                handleStart(gameId);
-            })
-            .catch((err) => {
-                setIsLoading(false);
-                Alert.alert(err)
-            });
+//        firestore()
+//            .collection('Games')
+//            .doc(gameId.toString())
+//            .set(data)
+//            .then(() => {
+//                setIsLoading(false)
+//                handleStart(gameId);
+//            })
+//            .catch((err) => {
+//                setIsLoading(false);
+//                Alert.alert(err)
+//            });
     }
 
     function temp() {
         context.offsetGameArea(0);
 
-        setTimeout(() => {
-            context.offsetGameArea(1);
-        }, 2000)
-
-        setTimeout(() => {
-            context.offsetGameArea(2);
-        }, 4000)
+//        setTimeout(() => {
+//            context.offsetGameArea(1);
+//        }, 2000)
+//
+//        setTimeout(() => {
+//            context.offsetGameArea(2);
+//        }, 4000)
     }
 
     function handleStart(gameId) {
@@ -147,33 +153,25 @@ function LocationSelect({navigation}) {
     return (
         <View style={styles.container}>
             <View style={styles.map}>
+
                 <MapPreview
                     onLongPress={handleLongPress}
                     centerCoordinate={context.coordinates}
                 >
                     <MapboxGL.UserLocation/>
-                    {
-                        context.originalGameArea &&
-                        <MapboxGL.ShapeSource shape={context.originalGameArea} id="pick">
-                            <MapboxGL.FillLayer id="dick" style={{
-                                fillColor: '#ed5e42',
-                                fillOpacity: 0.5
-                            }}/>
-                            <MapboxGL.LineLayer
-                                id="rick"
-                                style={{
-                                    lineColor: "transparent", lineWidth: 0
-                                }}
-                            />
-                        </MapboxGL.ShapeSource>
-                    }
+                    <GameAreaShape
+                        coordinates={context.originalGameArea}
+                        color='#ed5e42'
+                        ids={ids}
+                    />
                     <GameAreaShape coordinates={context.gameArea}/>
-
                 </MapPreview>
+
                 <View style={styles.absolute}>
                     <IconButton title="⊹" onPress={handleUseMyLocation}/>
                 </View>
             </View>
+
             <View style={styles.buttonsContainer}>
                 <View>
                     <CustomButton title="Create game area" onPress={handlePreviewGameArea}/>

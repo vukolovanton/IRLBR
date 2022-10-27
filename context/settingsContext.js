@@ -24,6 +24,7 @@ export const SettingsContext = createContext({
     offsetData: [],
     setOffsetData: () => {
     },
+    clearAllData: () => {},
 });
 
 function SettingsContextProvider({children}) {
@@ -109,6 +110,16 @@ function SettingsContextProvider({children}) {
         createGameArea(offsetData[index].width, offsetData[index].coordinates);
     }
 
+    function clearAllData() {
+        setCoordinates(null);
+        setGameArea(null);
+        setOriginalGameArea(null);
+        setRoundTime(null);
+        setDistance(null);
+        setStartTime(null);
+        setOffsetData(null);
+    }
+
     const value = {
         coordinates,
         handleChangeCoordinates,
@@ -123,6 +134,7 @@ function SettingsContextProvider({children}) {
         offsetGameArea,
         offsetData,
         setOffsetData,
+        clearAllData,
     }
 
     return (
