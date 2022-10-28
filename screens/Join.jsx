@@ -6,7 +6,6 @@ import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 import {VIEW_STYLE} from "../utils/constants";
 import {SettingsContext} from "../context/settingsContext";
-import {createDateTime, validateStartTime} from "../utils/utils";
 
 function Join({navigation}) {
     const [gameId, setGameId] = useState(null);
@@ -16,9 +15,9 @@ function Join({navigation}) {
     const context = useContext(SettingsContext);
 
     function handleJoinGame() {
-        let gameIdString = gameId.toString();
-
         if (!gameId) return;
+
+        let gameIdString = gameId.toString();
 
         if (gameIdString.length === 7 && gameIdString.charAt(3) === '-') {
             gameIdString = gameIdString.replace('-','');
