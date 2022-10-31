@@ -4,7 +4,7 @@
 
 
 ### How to use:
-1. Install the app - check out **releases** folder.
+1. Install the app - check out **release** folder.
 2. In main menu select `Create new game`, then enter game details
 `Round time` - how long each of 3 rounds should be (in minutes);
 `Distance` - how longh each side of square game area should be (in meters);
